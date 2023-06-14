@@ -1,41 +1,17 @@
-import { styled } from '../../../styles'
+import { styled } from '../../../../../styles'
 
-export const Container = styled('main', {
-  margin: '0 auto',
-  padding: '1.25rem',
-
-  width: '100%',
-  maxWidth: '1440px',
-  minHeight: '100vh',
-
-  display: 'grid',
-  gridTemplateColumns: '37.38rem 1fr',
-
-  overflow: 'hidden',
-})
-
-export const WrapperImage = styled('div', {
-  overflow: 'hidden',
-  borderRadius: '10px',
-
-  img: {
-    width: '100%',
-    height: '100%',
-    objectFit: 'cover',
-    scale: '1/1',
-  },
-})
-
-export const WrapperLogin = styled('div', {
+export const Container = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
 })
 
-export const Login = styled('div', {
+export const Wrapper = styled('div', {
   width: '100%',
   maxWidth: '23.25rem',
+})
 
+export const Title = styled('div', {
   h4: {
     margin: '0 0 2px 0',
     fontSize: '$2xl',
@@ -49,7 +25,7 @@ export const Login = styled('div', {
   },
 })
 
-export const Authentications = styled('div', {
+export const Methods = styled('div', {
   marginTop: '$10',
 
   display: 'flex',
@@ -57,7 +33,7 @@ export const Authentications = styled('div', {
   gap: '$4',
 })
 
-export const Authentication = styled('button', {
+export const Method = styled('div', {
   all: 'unset',
 
   width: '100%',
