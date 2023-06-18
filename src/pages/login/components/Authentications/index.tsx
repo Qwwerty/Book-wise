@@ -16,6 +16,12 @@ export function Authentications() {
     })
   }
 
+  async function handleSignWithGithub() {
+    await signIn('github', {
+      callbackUrl: '/home',
+    })
+  }
+
   async function handleSignWithVisitor() {
     await router.push('/home')
   }
@@ -39,7 +45,7 @@ export function Authentications() {
             <span>Entrar com Google</span>
           </Method>
 
-          <Method>
+          <Method onClick={handleSignWithGithub}>
             <Image
               src={githubImg}
               width={32}
