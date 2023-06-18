@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { signIn } from 'next-auth/react'
 import { Container, Method, Methods, Title, Wrapper } from './styles'
 
 import googleImg from '../../../../assets/icons/google.png'
@@ -8,8 +9,15 @@ import rocketImg from '../../../../assets/icons/rocket.png'
 
 export function Authentications() {
   const router = useRouter()
-  function handleSignWithVisitor() {
-    router.push('/home')
+
+  async function handleSignWithGoogle() {
+    await signIn('google', {
+      callbackUrl: '/home',
+    })
+  }
+
+  async function handleSignWithVisitor() {
+    await router.push('/home')
   }
 
   return (
@@ -21,7 +29,7 @@ export function Authentications() {
         </Title>
 
         <Methods>
-          <Method>
+          <Method onClick={handleSignWithGoogle}>
             <Image
               src={googleImg}
               width={32}
