@@ -8,6 +8,7 @@ export const Container = styled('main', {
   gridTemplateColumns: 'auto 1fr',
 
   padding: '$5 $5 $4 $5',
+  overflow: 'hidden',
 })
 
 export const Content = styled('aside', {
@@ -17,6 +18,5 @@ export const Content = styled('aside', {
   maxWidth: 996,
   height: '100vh',
 
-  backgroundColor: 'red',
   paddingTop: '4.5rem',
 })
