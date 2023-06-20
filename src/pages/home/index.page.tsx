@@ -1,11 +1,13 @@
-import { Navbar } from './components/Navbar'
-import { Container, Wrapper } from './styles'
+import { DefaultLayout } from '../../layouts/DefaultLayout'
+import { NextPageWithLayout } from '../_app.page'
+import { Container } from './styles'
 
-export default function Home() {
-  return (
-    <Container>
-      <Navbar />
-      <Wrapper></Wrapper>
-    </Container>
-  )
+const Home: NextPageWithLayout = () => {
+  return <Container>Home</Container>
 }
+
+Home.getLayout = (page) => {
+  return <DefaultLayout title="Início">{page}</DefaultLayout>
+}
+
+export default Home

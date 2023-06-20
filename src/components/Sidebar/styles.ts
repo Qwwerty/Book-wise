@@ -1,4 +1,4 @@
-import { styled, keyframes } from '../../../../../styles'
+import { styled, keyframes } from '../../../styles'
 
 const growthBar = keyframes({
   from: {
@@ -12,15 +12,16 @@ const growthBar = keyframes({
 
 export const Container = styled('nav', {
   width: '232px',
-  height: 'calc(100vh - 2.5rem)',
+  height: 'calc(100vh - 2.25rem)',
 
   background: '$gray700 url(/images/background-nav.png) no-repeat center',
   borderRadius: '12px',
-  padding: '$10 3.38rem $8 3.38rem',
 
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
+  alignItems: 'center',
+  padding: '$10 0 $6 0',
 
   '> section > img': {
     marginBottom: '4rem',
