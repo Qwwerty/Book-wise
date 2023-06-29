@@ -1,6 +1,7 @@
 import Link from 'next/link'
-import { Container, Navigation } from './styles'
+import { Container, ListPopularBooks, Navigation } from './styles'
 import { CaretRight } from 'phosphor-react'
+import { PopularBook } from './components/PopularBook'
 
 export function PopularBooks() {
   return (
@@ -12,6 +13,10 @@ export function PopularBooks() {
           <CaretRight size={16} />
         </Link>
       </Navigation>
+
+      <ListPopularBooks>
+        <PopularBook />
+      </ListPopularBooks>
     </Container>
   )
 }

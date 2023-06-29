@@ -37,3 +37,11 @@ export const Navigation = styled('div', {
     },
   },
 })
+
+export const ListPopularBooks = styled('div', {
+  marginTop: '$4',
+
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '$3',
+})
