@@ -13,8 +13,6 @@ import {
 import { CaretRight } from 'phosphor-react'
 import { Ratings } from '../../../../../../components/Ratings'
 
-import imgTmp from '../../../../../../assets/covers/entendendo-algoritmos.png'
-
 export function LastRead() {
   return (
     <Container>
@@ -26,7 +24,12 @@ export function LastRead() {
       </Description>
 
       <Card>
-        <Image src={imgTmp} width={108} height={152} alt="" />
+        <Image
+          src="/images/books/entendendo-algoritmos.png"
+          width={108}
+          height={152}
+          alt=""
+        />
 
         <Content>
           <Status>

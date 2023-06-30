@@ -1,6 +1,6 @@
 import { DefaultLayout } from '../../layouts/DefaultLayout'
 import { NextPageWithLayout } from '../_app.page'
-import { LatestRatings } from './components/LastestRatings'
+import { LatestRatings } from './components/LatestRatings'
 import { PopularBooks } from './components/PopularBooks'
 import { Container } from './styles'
 
