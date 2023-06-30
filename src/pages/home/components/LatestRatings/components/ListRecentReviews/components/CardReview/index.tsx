@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import dayjs from 'dayjs'
 import Image from 'next/image'
 import {
   Author,
@@ -11,12 +12,14 @@ import {
   Title,
 } from './styles'
 import { Ratings } from '../../../../../../../../components/Ratings'
+import { getRelativeTimeString } from '../../../../../../../../utils/getRelativeTimeString'
 
 const MAX_LENGTH = 229
 
 interface Rating {
   id: string
   rate: number
+  created_at: string
   user: {
     id: string
     name: string
@@ -39,6 +42,7 @@ export function CardReview({ rating }: CardReviewProps) {
   const [isShowMore, setIsShowMore] = useState(false)
 
   const hasOverflowText = rating.book.summary.length > MAX_LENGTH
+  const distance = getRelativeTimeString(new Date(rating.created_at), 'pt-BR')
 
   return (
     <Container isShowMore={isShowMore}>
@@ -55,7 +59,7 @@ export function CardReview({ rating }: CardReviewProps) {
 
           <div>
             <p>{rating.user.name}</p>
-            <span>Hoje</span>
+            <span>{distance}</span>
           </div>
         </HeaderInfo>
         <Ratings quantity={rating.rate} />

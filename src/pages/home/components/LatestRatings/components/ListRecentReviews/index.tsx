@@ -19,6 +19,7 @@ interface Rating {
     summary: string
     cover_url: string
   }
+  created_at: string
 }
 
 export function ListRecentReviews() {
