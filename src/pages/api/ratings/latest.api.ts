@@ -15,6 +15,9 @@ export default async function handler(
       book: true,
     },
     take: 10,
+    orderBy: {
+      created_at: 'desc',
+    },
   })
   return res.json({ ratings })
 }
