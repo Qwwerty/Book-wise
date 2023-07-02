@@ -45,6 +45,13 @@ export const Card = styled('div', {
 
   backgroundColor: '$gray600',
   borderRadius: 8,
+  border: '2px solid transparent',
+  cursor: 'pointer',
+  transition: 'border 500ms ease-out',
+
+  '&:hover': {
+    border: '2px solid $gray500',
+  },
 
   img: {
     objectFit: 'cover',
