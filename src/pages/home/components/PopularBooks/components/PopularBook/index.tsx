@@ -3,18 +3,30 @@ import { Container, Description } from './styles'
 
 import { Ratings } from '../../../../../../components/Ratings'
 
-export function PopularBook() {
+interface Book {
+  id: string
+  name: string
+  author: string
+  cover_url: string
+  rate: number
+}
+
+interface PopularBookProps {
+  book: Book
+}
+
+export function PopularBook({ book }: PopularBookProps) {
   return (
     <Container>
-      <Image src="/images/books/Book.png" width={64} height={94} alt="" />
+      <Image src={book.cover_url} width={64} height={94} alt={book.name} />
 
       <Description>
         <div>
-          <p>A revolução dos bichos</p>
-          <span>George Orwell</span>
+          <p>{book.name}</p>
+          <span>{book.author}</span>
         </div>
 
-        <Ratings quantity={4} />
+        <Ratings quantity={book.rate} />
       </Description>
     </Container>
   )
