@@ -6,6 +6,7 @@ import { Container, ButtonLogin, ButtonSignOut } from './styles'
 
 import logoImg from '../../assets/logo.png'
 import { ActiveLink } from './components/ActiveLink'
+import { useRouter } from 'next/router'
 
 const NAV_ITEMS = [
   {
@@ -21,6 +22,7 @@ const NAV_ITEMS = [
 ]
 
 export function Sidebar() {
+  const router = useRouter()
   const session = useSession()
 
   const isSignedIn = session.status === 'authenticated'
@@ -70,7 +72,7 @@ export function Sidebar() {
           <span>{session.data.user.name}</span> <SignOut />
         </ButtonSignOut>
       ) : (
-        <ButtonLogin>
+        <ButtonLogin onClick={() => router.push('/')}>
           <span>Fazer login</span> <SignIn />
         </ButtonLogin>
       )}
