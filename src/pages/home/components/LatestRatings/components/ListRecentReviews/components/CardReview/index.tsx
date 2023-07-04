@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import dayjs from 'dayjs'
 import Image from 'next/image'
 import {
   Author,
@@ -44,6 +43,8 @@ export function CardReview({ rating }: CardReviewProps) {
   const hasOverflowText = rating.book.summary.length > MAX_LENGTH
   const distance = getRelativeTimeString(new Date(rating.created_at), 'pt-BR')
 
+  console.log({ maxLength: MAX_LENGTH, size: rating.book.summary.length })
+
   return (
     <Container isShowMore={isShowMore}>
       <Header>
@@ -78,9 +79,7 @@ export function CardReview({ rating }: CardReviewProps) {
           <Author>{rating.book.author}</Author>
 
           {!hasOverflowText ? (
-            <Text>
-              {String(rating.book.summary).slice(0, MAX_LENGTH).concat('...')}
-            </Text>
+            <Text>{rating.book.summary}</Text>
           ) : (
             <>
               {!isShowMore ? (
