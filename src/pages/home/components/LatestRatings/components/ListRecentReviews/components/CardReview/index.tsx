@@ -43,8 +43,6 @@ export function CardReview({ rating }: CardReviewProps) {
   const hasOverflowText = rating.book.summary.length > MAX_LENGTH
   const distance = getRelativeTimeString(new Date(rating.created_at), 'pt-BR')
 
-  console.log({ maxLength: MAX_LENGTH, size: rating.book.summary.length })
-
   return (
     <Container isShowMore={isShowMore}>
       <Header>
