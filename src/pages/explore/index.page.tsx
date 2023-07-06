@@ -3,8 +3,12 @@ import { PageTitle } from '../../components/PageTitle'
 import { DefaultLayout } from '../../layouts/DefaultLayout'
 import { NextPageWithLayout } from '../_app.page'
 import { Container, Search, SearchContent } from './styles'
+import { Categories } from '../../components/Categories'
+import { useState } from 'react'
 
 const Explore: NextPageWithLayout = () => {
+  const [category, setCategory] = useState('Tudo')
+
   return (
     <Container>
       <PageTitle
@@ -19,6 +23,8 @@ const Explore: NextPageWithLayout = () => {
           <MagnifyingGlass size={20} />
         </SearchContent>
       </Search>
+
+      <Categories handleSetCategory={setCategory} category={category} />
     </Container>
   )
 }
