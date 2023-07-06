@@ -1,10 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { prisma } from '../../../lib/prisma'
 
-/* Recover four popular books
- * [] - Pegar quatro livros com mais ratings
- * */
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
