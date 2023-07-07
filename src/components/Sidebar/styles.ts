@@ -47,14 +47,17 @@ export const Container = styled('nav', {
     color: '$gray400',
     fontWeight: '$bold',
 
+    '&::before': {
+      content: '',
+      width: 4,
+      height: 0,
+    },
+
     '&.active': {
       color: '$gray100',
     },
 
     '&.active::before': {
-      content: '',
-      width: 4,
-      height: 0,
       background: 'linear-gradient(180deg, #7FD1CC 0%, #9694F5 100%)',
       borderRadius: '$full',
 
