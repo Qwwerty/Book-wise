@@ -24,7 +24,7 @@ export function PopularBooks() {
     <Container>
       <Navigation>
         <span>Livros populares</span>
-        <Link href="#">
+        <Link href="/explore">
           <span>Ver todos</span>
           <CaretRight size={16} />
         </Link>
