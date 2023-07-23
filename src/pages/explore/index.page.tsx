@@ -9,6 +9,7 @@ import { ListBooks } from './components/ListBooks'
 
 const Explore: NextPageWithLayout = () => {
   const [category, setCategory] = useState<string | null>(null)
+  const [search, setSearch] = useState('')
 
   return (
     <Container>
@@ -20,13 +21,16 @@ const Explore: NextPageWithLayout = () => {
 
       <Search>
         <SearchContent>
-          <input placeholder="Buscar livro ou autor" />
+          <input
+            onChange={(event) => setSearch(event.target.value)}
+            placeholder="Buscar livro ou autor"
+          />
           <MagnifyingGlass size={20} />
         </SearchContent>
       </Search>
 
       <Categories handleSetCategory={setCategory} category={category} />
-      <ListBooks category={category} />
+      <ListBooks category={category} search={search} />
     </Container>
   )
 }

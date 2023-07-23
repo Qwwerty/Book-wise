@@ -18,9 +18,10 @@ interface Book {
 
 interface ListBooksProps {
   category: string | null
+  search: string
 }
 
-export function ListBooks({ category }: ListBooksProps) {
+export function ListBooks({ category, search }: ListBooksProps) {
   const { data: books } = useQuery<Book[]>([`book-${category}`], async () => {
     const { data } = await api.get('/books', {
       params: {
@@ -31,9 +32,16 @@ export function ListBooks({ category }: ListBooksProps) {
     return data?.books ?? []
   })
 
+  const filteredBooks = books?.filter((book) => {
+    return (
+      book.name.toLowerCase().includes(search.toLowerCase()) ||
+      book.author.toLowerCase().includes(search.toLowerCase())
+    )
+  })
+
   return (
     <Container>
-      {books?.map((book) => (
+      {filteredBooks?.map((book) => (
         <Card book={book} key={book.id} />
       ))}
     </Container>
