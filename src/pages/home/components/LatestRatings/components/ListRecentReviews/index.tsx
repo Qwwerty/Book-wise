@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { CardReview } from './components/CardReview'
 import { Container, Title } from './styles'
 import { api } from '../../../../../../lib/axios'
