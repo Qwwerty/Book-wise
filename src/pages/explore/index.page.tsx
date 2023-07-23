@@ -8,7 +8,7 @@ import { useState } from 'react'
 import { ListBooks } from './components/ListBooks'
 
 const Explore: NextPageWithLayout = () => {
-  const [category, setCategory] = useState('Tudo')
+  const [category, setCategory] = useState<string | null>(null)
 
   return (
     <Container>
@@ -26,7 +26,7 @@ const Explore: NextPageWithLayout = () => {
       </Search>
 
       <Categories handleSetCategory={setCategory} category={category} />
-      <ListBooks />
+      <ListBooks category={category} />
     </Container>
   )
 }

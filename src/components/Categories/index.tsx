@@ -8,8 +8,8 @@ interface Category {
 }
 
 interface CategoriesProps {
-  handleSetCategory: (category: string) => void
-  category: string
+  handleSetCategory: (category: string | null) => void
+  category: string | null
 }
 
 export function Categories({ category, handleSetCategory }: CategoriesProps) {
@@ -25,16 +25,16 @@ export function Categories({ category, handleSetCategory }: CategoriesProps) {
   return (
     <Container>
       <Button
-        onClick={() => handleSetCategory('Tudo')}
-        isSelected={category === 'Tudo'}
+        onClick={() => handleSetCategory(null)}
+        isSelected={category === null}
       >
         Tudo
       </Button>
 
       {categories?.map((item) => (
         <Button
-          onClick={() => handleSetCategory(item.name)}
-          isSelected={category === item.name}
+          onClick={() => handleSetCategory(item.id)}
+          isSelected={category === item.id}
           key={item.id}
         >
           {item.name}

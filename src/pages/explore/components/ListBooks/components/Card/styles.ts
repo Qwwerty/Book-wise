@@ -4,6 +4,7 @@ export const Container = styled('div', {
   width: '19.9rem',
   height: '11.5rem',
   padding: '1rem 1.25rem',
+  position: 'relative',
 
   display: 'flex',
   gap: '1.25rem',
@@ -45,4 +46,14 @@ export const Title = styled('div', {
     color: '$gray400',
     lineHeight: '$base',
   },
+})
+
+export const AlreadyRead = styled('div', {
+  position: 'absolute',
+  top: '-1px',
+  right: '-1px',
+  padding: '0.25rem 0.75rem',
+
+  borderRadius: ' 0rem 0.25rem 0rem 0rem',
+  background: '$grenn300',
 })
