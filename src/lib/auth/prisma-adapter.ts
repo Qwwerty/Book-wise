@@ -1,41 +1,41 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import { Adapter } from 'next-auth/adapters'
 import { prisma } from '../prisma'
 
-export function PrismaAdapter(): Adapter {
+export function PrismaAdapter(
+  req: NextApiRequest,
+  res: NextApiResponse,
+): Adapter {
   return {
     async createUser(user) {
-      const prismaUser = await prisma.user.create({
+      const createdUser = await prisma.user.create({
         data: {
           name: user.name,
-          email: user.email,
           avatar_url: user.avatar_url,
+          email: user.email,
         },
       })
 
       return {
-        id: prismaUser.id,
-        name: prismaUser.name,
-        username: '',
-        email: prismaUser.email!,
+        ...createdUser,
+        avatar_url: createdUser.avatar_url!,
         emailVerified: null,
-        avatar_url: prismaUser.avatar_url!,
       }
     },
 
     async getUser(id) {
-      const user = await prisma.user.findUnique({ where: { id } })
+      const user = await prisma.user.findUnique({
+        where: {
+          id,
+        },
+      })
 
-      if (!user) {
-        return null
-      }
+      if (!user) return null
 
       return {
-        id: user.id,
-        name: user.name,
-        username: '',
-        email: user.email!,
-        emailVerified: null,
+        ...user,
         avatar_url: user.avatar_url!,
+        emailVerified: null,
       }
     },
 
@@ -46,17 +46,12 @@ export function PrismaAdapter(): Adapter {
         },
       })
 
-      if (!user) {
-        return null
-      }
+      if (!user) return null
 
       return {
-        id: user.id,
-        name: user.name,
-        username: '',
-        email: user.email!,
-        emailVerified: null,
+        ...user,
         avatar_url: user.avatar_url!,
+        emailVerified: null,
       }
     },
 
@@ -64,8 +59,8 @@ export function PrismaAdapter(): Adapter {
       const account = await prisma.account.findUnique({
         where: {
           provider_provider_account_id: {
-            provider,
             provider_account_id: providerAccountId,
+            provider,
           },
         },
         include: {
@@ -73,40 +68,33 @@ export function PrismaAdapter(): Adapter {
         },
       })
 
-      if (!account) {
-        return null
-      }
+      if (!account) return null
 
       const { user } = account
 
       return {
-        id: user.id,
-        name: user.name,
-        username: '',
-        email: user.email!,
-        emailVerified: null,
+        ...user,
         avatar_url: user.avatar_url!,
+        emailVerified: null,
       }
     },
 
     async updateUser(user) {
-      const primasUser = await prisma.user.update({
+      const updatedUser = await prisma.user.update({
         where: {
-          id: user.id!,
+          id: user.id,
         },
         data: {
           name: user.name,
+          email: user.email,
           avatar_url: user.avatar_url,
         },
       })
 
       return {
-        id: primasUser.id,
-        name: primasUser.name,
-        username: '',
-        email: primasUser.email,
+        ...updatedUser,
+        avatar_url: updatedUser.avatar_url!,
         emailVerified: null,
-        avatar_url: primasUser.avatar_url!,
       }
     },
 
@@ -138,8 +126,8 @@ export function PrismaAdapter(): Adapter {
       })
 
       return {
-        userId,
         sessionToken,
+        userId,
         expires,
       }
     },
@@ -154,9 +142,7 @@ export function PrismaAdapter(): Adapter {
         },
       })
 
-      if (!prismaSession) {
-        return null
-      }
+      if (!prismaSession) return null
 
       const { user, ...session } = prismaSession
 
@@ -169,10 +155,9 @@ export function PrismaAdapter(): Adapter {
         user: {
           id: user.id,
           name: user.name,
-          username: '',
-          email: user.email,
-          emailVerified: null,
+          email: user.email!,
           avatar_url: user.avatar_url!,
+          emailVerified: null,
         },
       }
     },
@@ -183,8 +168,8 @@ export function PrismaAdapter(): Adapter {
           session_token: sessionToken,
         },
         data: {
-          expires,
           user_id: userId,
+          expires,
         },
       })
 
