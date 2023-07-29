@@ -5,38 +5,46 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  if (req.method !== 'GET') {
-    return res.status(405).end()
-  }
+  if (req.method !== 'GET') return res.status(405).end()
 
-  const booksWithMoreReviews = await prisma.rating.groupBy({
-    by: ['book_id'],
-    _avg: {
-      rate: true,
-    },
+  const books = await prisma.book.findMany({
     orderBy: {
-      _avg: {
-        rate: 'desc',
+      ratings: {
+        _count: 'desc',
       },
+    },
+    include: {
+      ratings: true,
     },
     take: 4,
   })
 
-  const books = await prisma.book.findMany({
+  const booksAvgRating = await prisma.rating.groupBy({
+    by: ['book_id'],
     where: {
-      id: {
-        in: booksWithMoreReviews.map((book) => book.book_id),
+      book_id: {
+        in: books.map((book) => book.id),
       },
+    },
+    _avg: {
+      rate: true,
     },
   })
 
-  const booksWithAvg = booksWithMoreReviews.map((item) => {
-    const book = books.find((book) => book.id === item.book_id)
-    return {
-      ...book,
-      rate: item['_avg'].rate,
-    }
-  })
+  const booksWithAvgRating = books
+    .map((book) => {
+      const bookAvgRating = booksAvgRating.find(
+        (avgRating) => avgRating.book_id === book.id,
+      )
+      const { ...bookInfo } = book
+      return {
+        ...bookInfo,
+        avgRating: bookAvgRating?._avg.rate,
+      }
+    })
+    .sort((a, b) =>
+      a.avgRating && b.avgRating ? b.avgRating - a.avgRating : 0,
+    )
 
-  return res.json({ books: booksWithAvg })
+  return res.json({ books: booksWithAvgRating })
 }
