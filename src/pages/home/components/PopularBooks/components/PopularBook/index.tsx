@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { Container, Description } from './styles'
+import { BookAuthor, BookName, Container, Description } from './styles'
 
 import { Ratings } from '../../../../../../components/Ratings'
 
@@ -22,8 +22,8 @@ export function PopularBook({ book }: PopularBookProps) {
 
       <Description>
         <div>
-          <p>{book.name}</p>
-          <span>{book.author}</span>
+          <BookName>{book.name}</BookName>
+          <BookAuthor>{book.author}</BookAuthor>
         </div>
 
         <Ratings quantity={book.rate} />
