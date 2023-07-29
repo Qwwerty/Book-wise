@@ -44,12 +44,7 @@ export function LastRead({ rating }: LastReadProps) {
       </Description>
 
       <Card>
-        <Image
-          src="/images/books/entendendo-algoritmos.png"
-          width={108}
-          height={152}
-          alt=""
-        />
+        <Image src={rating.book.cover_url} width={108} height={152} alt="" />
 
         <Content>
           <Status>
