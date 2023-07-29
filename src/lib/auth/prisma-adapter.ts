@@ -1,25 +1,27 @@
-import { NextApiRequest, NextApiResponse } from 'next'
 import { Adapter } from 'next-auth/adapters'
 import { prisma } from '../prisma'
+import { NextApiRequest, NextApiResponse, NextPageContext } from 'next'
 
 export function PrismaAdapter(
-  req: NextApiRequest,
-  res: NextApiResponse,
+  req: NextApiRequest | NextPageContext['req'],
+  res: NextApiResponse | NextPageContext['res'],
 ): Adapter {
   return {
     async createUser(user) {
-      const createdUser = await prisma.user.create({
+      const prismaUser = await prisma.user.create({
         data: {
           name: user.name,
-          avatar_url: user.avatar_url,
           email: user.email,
+          avatar_url: user.avatar_url,
         },
       })
 
       return {
-        ...createdUser,
-        avatar_url: createdUser.avatar_url!,
+        id: prismaUser.id,
+        name: prismaUser.name,
+        email: prismaUser.email!,
         emailVerified: null,
+        avatar_url: prismaUser.avatar_url!,
       }
     },
 
@@ -30,12 +32,16 @@ export function PrismaAdapter(
         },
       })
 
-      if (!user) return null
+      if (!user) {
+        return null
+      }
 
       return {
-        ...user,
-        avatar_url: user.avatar_url!,
+        id: user.id,
+        name: user.name,
+        email: user.email!,
         emailVerified: null,
+        avatar_url: user.avatar_url!,
       }
     },
 
@@ -46,12 +52,16 @@ export function PrismaAdapter(
         },
       })
 
-      if (!user) return null
+      if (!user) {
+        return null
+      }
 
       return {
-        ...user,
-        avatar_url: user.avatar_url!,
+        id: user.id,
+        name: user.name,
+        email: user.email!,
         emailVerified: null,
+        avatar_url: user.avatar_url!,
       }
     },
 
@@ -59,8 +69,8 @@ export function PrismaAdapter(
       const account = await prisma.account.findUnique({
         where: {
           provider_provider_account_id: {
-            provider_account_id: providerAccountId,
             provider,
+            provider_account_id: providerAccountId,
           },
         },
         include: {
@@ -68,21 +78,25 @@ export function PrismaAdapter(
         },
       })
 
-      if (!account) return null
+      if (!account) {
+        return null
+      }
 
       const { user } = account
 
       return {
-        ...user,
-        avatar_url: user.avatar_url!,
+        id: user.id,
+        name: user.name,
+        email: user.email!,
         emailVerified: null,
+        avatar_url: user.avatar_url!,
       }
     },
 
     async updateUser(user) {
-      const updatedUser = await prisma.user.update({
+      const primasUser = await prisma.user.update({
         where: {
-          id: user.id,
+          id: user.id!,
         },
         data: {
           name: user.name,
@@ -92,9 +106,11 @@ export function PrismaAdapter(
       })
 
       return {
-        ...updatedUser,
-        avatar_url: updatedUser.avatar_url!,
+        id: primasUser.id,
+        name: primasUser.name,
+        email: primasUser.email!,
         emailVerified: null,
+        avatar_url: primasUser.avatar_url!,
       }
     },
 
@@ -126,8 +142,8 @@ export function PrismaAdapter(
       })
 
       return {
-        sessionToken,
         userId,
+        sessionToken,
         expires,
       }
     },
@@ -142,7 +158,9 @@ export function PrismaAdapter(
         },
       })
 
-      if (!prismaSession) return null
+      if (!prismaSession) {
+        return null
+      }
 
       const { user, ...session } = prismaSession
 
@@ -156,8 +174,8 @@ export function PrismaAdapter(
           id: user.id,
           name: user.name,
           email: user.email!,
-          avatar_url: user.avatar_url!,
           emailVerified: null,
+          avatar_url: user.avatar_url!,
         },
       }
     },
@@ -168,8 +186,8 @@ export function PrismaAdapter(
           session_token: sessionToken,
         },
         data: {
-          user_id: userId,
           expires,
+          user_id: userId,
         },
       })
 
