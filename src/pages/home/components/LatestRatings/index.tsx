@@ -12,23 +12,29 @@ interface Rating {
   rate: number
   description: string
   created_at: string
-  book_id: string
-  user_id: string
-  user: {
-    id: string
+  book: {
     name: string
+    author: string
+    summary: string
+    cover_url: string
   }
 }
 
 export function LatestRatings() {
-  const session = useSession()
-  const { data: rating } = useQuery<Rating>(['rating'], async () => {
-    const { data } = await api.get('/ratings/user-latest')
+  const { data: session } = useSession()
 
-    return data?.rating ?? []
-  })
+  const userId = session?.user?.id
 
-  const isSignedIn = session.status === 'authenticated'
+  const { data: latestUserRating } = useQuery<Rating>(
+    ['latest-user-rating', userId],
+    async () => {
+      const { data } = await api.get('/ratings/user-latest')
+      return data?.rating ?? null
+    },
+    {
+      enabled: !!userId,
+    },
+  )
 
   return (
     <Container>
@@ -38,7 +44,7 @@ export function LatestRatings() {
         css={{ marginBottom: '2.75rem' }}
       />
 
-      {isSignedIn && <LastRead />}
+      {latestUserRating && <LastRead rating={latestUserRating} />}
       <ListRecentReviews />
     </Container>
   )

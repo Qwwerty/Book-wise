@@ -12,8 +12,28 @@ import {
 } from './styles'
 import { CaretRight } from 'phosphor-react'
 import { Ratings } from '../../../../../../components/Ratings'
+import { getRelativeTimeString } from '../../../../../../utils/getRelativeTimeString'
 
-export function LastRead() {
+interface Rating {
+  id: string
+  rate: number
+  description: string
+  created_at: string
+  book: {
+    name: string
+    author: string
+    summary: string
+    cover_url: string
+  }
+}
+
+interface LastReadProps {
+  rating: Rating
+}
+
+export function LastRead({ rating }: LastReadProps) {
+  const distance = getRelativeTimeString(new Date(rating.created_at), 'pt-BR')
+
   return (
     <Container>
       <Description>
@@ -33,17 +53,14 @@ export function LastRead() {
 
         <Content>
           <Status>
-            <span>Há 2 dias</span>
-            <Ratings quantity={3} />
+            <span>{distance}</span>
+            <Ratings quantity={rating.rate} />
           </Status>
 
-          <TitleBook>Entendendo Algoritmos</TitleBook>
-          <Author>Aditya Bhargava</Author>
+          <TitleBook>{rating.book.name}</TitleBook>
+          <Author>{rating.book.author}</Author>
 
-          <Resume>
-            Nec tempor nunc in egestas. Euismod nisi eleifend at et in sagittis.
-            Penatibus id vestibulum imperdiet a at imperdiet lectu...
-          </Resume>
+          <Resume>{rating.book.summary}</Resume>
         </Content>
       </Card>
     </Container>
