@@ -17,23 +17,30 @@ interface Book {
 
 interface CardProps {
   book: Book
+  handleSelectBook: (bookId: string) => void
 }
 
-export function Card({ book }: CardProps) {
+export function Card({ book, handleSelectBook }: CardProps) {
+  function handleOpenBook() {
+    handleSelectBook(book.id)
+  }
+
   return (
-    <Container>
-      {book.alreadyRead && <AlreadyRead>LIDO</AlreadyRead>}
+    <>
+      <Container onClick={handleOpenBook}>
+        {book.alreadyRead && <AlreadyRead>LIDO</AlreadyRead>}
 
-      <Image src={book.cover_url} width={108} height={152} alt={book.name} />
+        <Image src={book.cover_url} width={108} height={152} alt={book.name} />
 
-      <Description>
-        <Title>
-          <p>{book.name}</p>
-          <span>{book.author}</span>
-        </Title>
+        <Description>
+          <Title>
+            <p>{book.name}</p>
+            <span>{book.author}</span>
+          </Title>
 
-        <Ratings quantity={book.ratings} />
-      </Description>
-    </Container>
+          <Ratings quantity={book.avgRating} />
+        </Description>
+      </Container>
+    </>
   )
 }

@@ -1,15 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { prisma } from '../../../lib/prisma'
 import { getServerSession } from 'next-auth'
+import { prisma } from '../../../lib/prisma'
 import { buildNextAuthOptions } from '../auth/[...nextauth].api'
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  if (req.method !== 'GET') {
-    return res.status(405).end()
-  }
+  if (req.method !== 'GET') return res.status(405).end()
 
   const categoryId = req.query.category as string
 
@@ -63,12 +61,10 @@ export default async function handler(
     return {
       ...bookInfo,
       ratings: ratings.length,
-      avgRating: bookAvgRating?._avg.rate,
+      avgRating: Math.floor(bookAvgRating?._avg.rate ?? 0),
       alreadyRead: userBooksIds.includes(book.id),
     }
   })
 
   return res.json({ books: booksWithAvgRating })
-
-  return res.json({ booksAvgRating })
 }

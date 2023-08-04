@@ -2,6 +2,8 @@ import { useQuery } from '@tanstack/react-query'
 import { Card } from './components/Card'
 import { Container } from './styles'
 import { api } from '../../../../lib/axios'
+import { Modal } from '../../../../components/Modal'
+import { useState } from 'react'
 
 interface Book {
   id: string
@@ -16,12 +18,49 @@ interface Book {
   alreadyRead: boolean
 }
 
+interface BookDetail {
+  id: string
+  name: string
+  author: string
+  summary: string
+  cover_url: string
+  avgRating: number
+  total_pages: number
+  created_at: string
+  categories: Array<{
+    book_id: string
+    categoryId: string
+    category: {
+      id: string
+      name: string
+    }
+  }>
+  ratings: Array<{
+    id: string
+    rate: number
+    description: string
+    created_at: string
+    book_id: string
+    user_id: string
+    user: {
+      id: string
+      email: string
+      name: string
+      avatar_url: string
+      created_at: string
+    }
+  }>
+}
+
 interface ListBooksProps {
   category: string | null
   search: string
 }
 
 export function ListBooks({ category, search }: ListBooksProps) {
+  const [modalOpen, setModalOpen] = useState(false)
+  const [bookId, setBookId] = useState('')
+
   const { data: books } = useQuery<Book[]>([`book-${category}`], async () => {
     const { data } = await api.get('/books', {
       params: {
@@ -32,6 +71,14 @@ export function ListBooks({ category, search }: ListBooksProps) {
     return data?.books ?? []
   })
 
+  const { data: book } = useQuery<BookDetail>([`book-${bookId}`], async () => {
+    if (bookId === '') return null
+
+    const { data } = await api.get(`/books/details/${bookId}`)
+
+    return data?.book ?? null
+  })
+
   const filteredBooks = books?.filter((book) => {
     return (
       book.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -39,11 +86,26 @@ export function ListBooks({ category, search }: ListBooksProps) {
     )
   })
 
+  function handleSelectBook(bookId: string) {
+    setBookId(bookId)
+    setModalOpen(true)
+  }
+
+  function handleCloseModal() {
+    setModalOpen(!modalOpen)
+  }
+
   return (
-    <Container>
-      {filteredBooks?.map((book) => (
-        <Card book={book} key={book.id} />
-      ))}
-    </Container>
+    <>
+      <Container>
+        {filteredBooks?.map((book) => (
+          <Card book={book} handleSelectBook={handleSelectBook} key={book.id} />
+        ))}
+      </Container>
+
+      {modalOpen && book && (
+        <Modal bookDetail={book} handleClose={handleCloseModal} />
+      )}
+    </>
   )
 }
