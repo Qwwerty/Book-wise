@@ -1,7 +1,5 @@
 import Image from 'next/image'
-import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { BookOpen, BookmarkSimple, Check, X } from 'phosphor-react'
+import { BookOpen, BookmarkSimple, X } from 'phosphor-react'
 import {
   About,
   Book,
@@ -27,22 +25,11 @@ import {
   UserInfoImage,
   UserInfoDescription,
   CommentsList,
-  NewComment,
-  NewCommentHeader,
-  NewCommentUser,
-  NewCommentText,
-  TextAreaContainer,
-  NewCommentActions,
-  FormError,
-  TextAreaFooter,
-  TextLimit,
 } from './styles'
 
 import { Ratings } from '../Ratings'
 import { getRelativeTimeString } from '../../utils/getRelativeTimeString'
-import { RatingsAvailable } from '../RatingsAvailable'
-import { Controller, useForm } from 'react-hook-form'
-import { error } from 'console'
+import { ReviewComment } from '../Comment'
 
 interface BookDetail {
   id: string
@@ -83,35 +70,8 @@ interface ModalProps {
   handleClose: () => void
 }
 
-const TEXT_AREA_LENGTH = 450
-
-const newCommentFormSchema = z.object({
-  rate: z.number().min(1).max(5),
-  comment: z
-    .string()
-    .min(10, 'O mínimo é de 10 caracteres.')
-    .max(450, 'O máximo é de 450 caracteres.'),
-})
-
-type FormData = z.infer<typeof newCommentFormSchema>
-
 export function Modal({ bookDetail, handleClose }: ModalProps) {
-  const {
-    register,
-    handleSubmit,
-    control,
-    watch,
-    formState: { isSubmitting, errors },
-  } = useForm<FormData>({
-    resolver: zodResolver(newCommentFormSchema),
-    defaultValues: {
-      rate: 0,
-      comment: '',
-    },
-  })
-
-  const textAvailable = watch('comment') ?? ''
-  const quantityAvailables = bookDetail.ratings.length + 1
+  const amountOfComments = bookDetail.ratings.length + 1
 
   const categories = bookDetail.categories.reduce((acc, current) => {
     acc += `${current.category.name}, `
@@ -121,12 +81,8 @@ export function Modal({ bookDetail, handleClose }: ModalProps) {
 
   const categoriesWithoudLastComma = categories.slice(0, categories.length - 2)
 
-  function handleNewComment(data: FormData) {
-    console.log(data)
-  }
-
   return (
-    <Container onSubmit={handleSubmit(handleNewComment)}>
+    <Container>
       <Content>
         <ButtonClose onClick={handleClose} type="button">
           <X size={24} />
@@ -152,7 +108,7 @@ export function Modal({ bookDetail, handleClose }: ModalProps) {
               <div>
                 <Ratings quantity={bookDetail.avgRating} />
                 <BookQuantityRate>
-                  {quantityAvailables} avaliações
+                  {amountOfComments} avaliações
                 </BookQuantityRate>
               </div>
             </BookInfo>
@@ -185,62 +141,9 @@ export function Modal({ bookDetail, handleClose }: ModalProps) {
             <button type="button">Avaliar</button>
           </CommentsTitle>
 
+          <ReviewComment />
+
           <CommentsList>
-            <NewComment>
-              <NewCommentHeader>
-                <NewCommentUser>
-                  <UserInfoImage>
-                    <Image
-                      src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=761&q=80"
-                      width={40}
-                      height={40}
-                      alt=""
-                    />
-                  </UserInfoImage>
-                  <span>Cristofer Rosser</span>
-                </NewCommentUser>
-
-                <Controller
-                  name="rate"
-                  control={control}
-                  render={({ field }) => {
-                    return (
-                      <RatingsAvailable
-                        numberOfStars={field.value}
-                        setSelectedStars={(starIndex: number) =>
-                          field.onChange(starIndex)
-                        }
-                      />
-                    )
-                  }}
-                />
-              </NewCommentHeader>
-
-              <NewCommentText>
-                <TextAreaContainer>
-                  <textarea
-                    placeholder="Escreva sua avaliação"
-                    {...register('comment')}
-                  />
-                  <TextAreaFooter>
-                    <FormError>{errors.comment?.message}</FormError>
-                    <TextLimit>
-                      {textAvailable.length}/{TEXT_AREA_LENGTH}
-                    </TextLimit>
-                  </TextAreaFooter>
-                </TextAreaContainer>
-
-                <NewCommentActions>
-                  <button>
-                    <X />
-                  </button>
-                  <button type="submit" disabled={isSubmitting}>
-                    <Check />
-                  </button>
-                </NewCommentActions>
-              </NewCommentText>
-            </NewComment>
-
             {bookDetail.ratings.map((rating) => (
               <Comment key={rating.id}>
                 <HeaderComment>
