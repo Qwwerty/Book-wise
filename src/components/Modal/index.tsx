@@ -1,4 +1,6 @@
 import Image from 'next/image'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { BookOpen, BookmarkSimple, Check, X } from 'phosphor-react'
 import {
   About,
@@ -31,12 +33,16 @@ import {
   NewCommentText,
   TextAreaContainer,
   NewCommentActions,
+  FormError,
+  TextAreaFooter,
+  TextLimit,
 } from './styles'
 
 import { Ratings } from '../Ratings'
 import { getRelativeTimeString } from '../../utils/getRelativeTimeString'
 import { RatingsAvailable } from '../RatingsAvailable'
-import { useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import { error } from 'console'
 
 interface BookDetail {
   id: string
@@ -79,9 +85,32 @@ interface ModalProps {
 
 const TEXT_AREA_LENGTH = 450
 
-export function Modal({ bookDetail, handleClose }: ModalProps) {
-  const [textAvailable, setTextAvailable] = useState('')
+const newCommentFormSchema = z.object({
+  rate: z.number().min(1).max(5),
+  comment: z
+    .string()
+    .min(10, 'O mínimo é de 10 caracteres.')
+    .max(450, 'O máximo é de 450 caracteres.'),
+})
 
+type FormData = z.infer<typeof newCommentFormSchema>
+
+export function Modal({ bookDetail, handleClose }: ModalProps) {
+  const {
+    register,
+    handleSubmit,
+    control,
+    watch,
+    formState: { isSubmitting, errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(newCommentFormSchema),
+    defaultValues: {
+      rate: 0,
+      comment: '',
+    },
+  })
+
+  const textAvailable = watch('comment') ?? ''
   const quantityAvailables = bookDetail.ratings.length + 1
 
   const categories = bookDetail.categories.reduce((acc, current) => {
@@ -92,14 +121,12 @@ export function Modal({ bookDetail, handleClose }: ModalProps) {
 
   const categoriesWithoudLastComma = categories.slice(0, categories.length - 2)
 
-  const handleTextareaChange = (event: any) => {
-    if (textAvailable.length > TEXT_AREA_LENGTH) return
-
-    setTextAvailable(String(event.target.value).slice(0, TEXT_AREA_LENGTH))
+  function handleNewComment(data: FormData) {
+    console.log(data)
   }
 
   return (
-    <Container>
+    <Container onSubmit={handleSubmit(handleNewComment)}>
       <Content>
         <ButtonClose onClick={handleClose} type="button">
           <X size={24} />
@@ -173,25 +200,41 @@ export function Modal({ bookDetail, handleClose }: ModalProps) {
                   <span>Cristofer Rosser</span>
                 </NewCommentUser>
 
-                <RatingsAvailable />
+                <Controller
+                  name="rate"
+                  control={control}
+                  render={({ field }) => {
+                    return (
+                      <RatingsAvailable
+                        numberOfStars={field.value}
+                        setSelectedStars={(starIndex: number) =>
+                          field.onChange(starIndex)
+                        }
+                      />
+                    )
+                  }}
+                />
               </NewCommentHeader>
 
               <NewCommentText>
                 <TextAreaContainer>
                   <textarea
-                    value={textAvailable}
-                    onChange={handleTextareaChange}
                     placeholder="Escreva sua avaliação"
+                    {...register('comment')}
                   />
-                  <span>
-                    {textAvailable.length}/{TEXT_AREA_LENGTH}
-                  </span>
+                  <TextAreaFooter>
+                    <FormError>{errors.comment?.message}</FormError>
+                    <TextLimit>
+                      {textAvailable.length}/{TEXT_AREA_LENGTH}
+                    </TextLimit>
+                  </TextAreaFooter>
                 </TextAreaContainer>
+
                 <NewCommentActions>
                   <button>
                     <X />
                   </button>
-                  <button>
+                  <button type="submit" disabled={isSubmitting}>
                     <Check />
                   </button>
                 </NewCommentActions>

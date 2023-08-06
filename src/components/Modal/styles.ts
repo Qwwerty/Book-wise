@@ -5,7 +5,7 @@ const fadeIn = keyframes({
   to: { opacity: 1 },
 })
 
-export const Container = styled('main', {
+export const Container = styled('form', {
   width: '100%',
   height: '100vh',
 
@@ -389,26 +389,26 @@ export const NewCommentText = styled('div', {
 })
 
 export const TextAreaContainer = styled('div', {
-  position: 'relative',
   padding: '0.88rem 1.25rem',
 
   borderRadius: '0.25rem',
   border: '1px solid $gray500',
   background: '$gray800',
 
-  span: {
-    position: 'absolute',
-    right: '0.5rem',
-    bottom: '0.25rem',
-
-    fontSize: '0.75rem',
-    color: '$gray400',
-    lineHeight: '$base',
-  },
-
   '&:focus-within': {
     borderColor: '$grenn200',
   },
+})
+
+export const TextAreaFooter = styled('div', {
+  display: 'flex',
+  justifyContent: 'space-between',
+})
+
+export const TextLimit = styled('span', {
+  fontSize: '0.75rem',
+  color: '$gray400',
+  lineHeight: '$base',
 })
 
 export const NewCommentActions = styled('div', {
@@ -445,4 +445,10 @@ export const NewCommentActions = styled('div', {
       },
     },
   },
+})
+
+export const FormError = styled('span', {
+  fontSize: '0.75rem',
+  color: '#f75a68',
+  lineHeight: '$base',
 })
