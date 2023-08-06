@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { BookOpen, BookmarkSimple, X } from 'phosphor-react'
+import { BookOpen, BookmarkSimple, Check, X } from 'phosphor-react'
 import {
   About,
   Book,
@@ -25,11 +25,18 @@ import {
   UserInfoImage,
   UserInfoDescription,
   CommentsList,
+  NewComment,
+  NewCommentHeader,
+  NewCommentUser,
+  NewCommentText,
+  TextAreaContainer,
+  NewCommentActions,
 } from './styles'
 
-import coverImg from './tmp/cover.svg'
 import { Ratings } from '../Ratings'
 import { getRelativeTimeString } from '../../utils/getRelativeTimeString'
+import { RatingsAvailable } from '../RatingsAvailable'
+import { useState } from 'react'
 
 interface BookDetail {
   id: string
@@ -70,7 +77,11 @@ interface ModalProps {
   handleClose: () => void
 }
 
+const TEXT_AREA_LENGTH = 450
+
 export function Modal({ bookDetail, handleClose }: ModalProps) {
+  const [textAvailable, setTextAvailable] = useState('')
+
   const quantityAvailables = bookDetail.ratings.length + 1
 
   const categories = bookDetail.categories.reduce((acc, current) => {
@@ -80,6 +91,12 @@ export function Modal({ bookDetail, handleClose }: ModalProps) {
   }, '')
 
   const categoriesWithoudLastComma = categories.slice(0, categories.length - 2)
+
+  const handleTextareaChange = (event: any) => {
+    if (textAvailable.length > TEXT_AREA_LENGTH) return
+
+    setTextAvailable(String(event.target.value).slice(0, TEXT_AREA_LENGTH))
+  }
 
   return (
     <Container>
@@ -142,6 +159,45 @@ export function Modal({ bookDetail, handleClose }: ModalProps) {
           </CommentsTitle>
 
           <CommentsList>
+            <NewComment>
+              <NewCommentHeader>
+                <NewCommentUser>
+                  <UserInfoImage>
+                    <Image
+                      src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=761&q=80"
+                      width={40}
+                      height={40}
+                      alt=""
+                    />
+                  </UserInfoImage>
+                  <span>Cristofer Rosser</span>
+                </NewCommentUser>
+
+                <RatingsAvailable />
+              </NewCommentHeader>
+
+              <NewCommentText>
+                <TextAreaContainer>
+                  <textarea
+                    value={textAvailable}
+                    onChange={handleTextareaChange}
+                    placeholder="Escreva sua avaliação"
+                  />
+                  <span>
+                    {textAvailable.length}/{TEXT_AREA_LENGTH}
+                  </span>
+                </TextAreaContainer>
+                <NewCommentActions>
+                  <button>
+                    <X />
+                  </button>
+                  <button>
+                    <Check />
+                  </button>
+                </NewCommentActions>
+              </NewCommentText>
+            </NewComment>
+
             {bookDetail.ratings.map((rating) => (
               <Comment key={rating.id}>
                 <HeaderComment>
