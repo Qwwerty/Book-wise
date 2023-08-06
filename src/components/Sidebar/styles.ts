@@ -107,8 +107,6 @@ export const ButtonSignOut = styled('button', {
   fontSize: '$sm',
   fontWeight: '$bold',
 
-  cursor: 'pointer',
-
   svg: {
     width: '20px',
     height: '20px',

@@ -8,7 +8,7 @@ interface Book {
   name: string
   author: string
   cover_url: string
-  rate: number
+  avgRating: number
 }
 
 interface PopularBookProps {
@@ -26,7 +26,7 @@ export function PopularBook({ book }: PopularBookProps) {
           <BookAuthor>{book.author}</BookAuthor>
         </div>
 
-        <Ratings quantity={book.rate} />
+        <Ratings quantity={book.avgRating} />
       </Description>
     </Container>
   )

@@ -107,7 +107,6 @@ export const Text = styled('span', {
 
     fontWeight: '$bold',
     color: '$purple100',
-    cursor: 'pointer',
 
     '&:hover': {
       backgroundColor: '#8381D90F',

@@ -10,7 +10,7 @@ export const Container = styled('div', {
   padding: '1.125rem $5',
   borderRadius: 8,
   border: '2px solid transparent',
-  cursor: 'pointer',
+
   transition: 'border 500ms ease-out',
 
   '&:hover': {

@@ -12,7 +12,6 @@ export const Container = styled('div', {
   backgroundColor: '$gray700',
   borderRadius: '0.5rem',
   border: '2px solid transparent',
-  cursor: 'pointer',
   transition: 'border 500ms ease-out',
 
   '&:hover': {

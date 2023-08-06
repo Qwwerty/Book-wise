@@ -39,7 +39,7 @@ export default async function handler(
       const { ...bookInfo } = book
       return {
         ...bookInfo,
-        avgRating: bookAvgRating?._avg.rate,
+        avgRating: Math.floor(Number(bookAvgRating?._avg.rate)),
       }
     })
     .sort((a, b) =>

@@ -54,8 +54,6 @@ export const ButtonClose = styled('button', {
   top: 24,
   right: 48,
 
-  cursor: 'pointer',
-
   svg: {
     width: '1.5rem',
     height: '1.5rem',
@@ -242,7 +240,6 @@ export const CommentsTitle = styled('div', {
     alignItems: 'center',
     padding: '0.25rem 0.5rem',
 
-    cursor: 'pointer',
     color: '$purple100',
 
     transitionDuration: '300ms',

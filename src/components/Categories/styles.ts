@@ -14,7 +14,6 @@ export const Button = styled('button', {
   padding: '$1 $4',
   color: '$purple100',
 
-  cursor: 'pointer',
   transition: 'all 300ms ease-out',
 
   '&:hover': {
