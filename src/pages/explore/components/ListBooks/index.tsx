@@ -3,7 +3,8 @@ import { Card } from './components/Card'
 import { Container } from './styles'
 import { api } from '../../../../lib/axios'
 import { Modal } from '../../../../components/Modal'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { Router, useRouter } from 'next/router'
 
 interface Book {
   id: string
@@ -61,6 +62,8 @@ export function ListBooks({ category, search }: ListBooksProps) {
   const [modalOpen, setModalOpen] = useState(false)
   const [bookId, setBookId] = useState('')
 
+  const router = useRouter()
+
   const { data: books } = useQuery<Book[]>([`book-${category}`], async () => {
     const { data } = await api.get('/books', {
       params: {
@@ -94,6 +97,22 @@ export function ListBooks({ category, search }: ListBooksProps) {
   function handleCloseModal() {
     setModalOpen(!modalOpen)
   }
+
+  useEffect(() => {
+    if (!router.query?.bookId) return
+
+    const { pathname, query } = router
+
+    setBookId(String(router.query?.bookId))
+    setModalOpen(true)
+
+    delete router.query.bookId
+
+    router.push({
+      pathname,
+      query,
+    })
+  }, [router, router.query.bookId])
 
   return (
     <>

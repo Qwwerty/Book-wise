@@ -30,6 +30,9 @@ import {
 import { Ratings } from '../Ratings'
 import { getRelativeTimeString } from '../../utils/getRelativeTimeString'
 import { ReviewComment } from '../Comment'
+import { useSession } from 'next-auth/react'
+import { SignInModal } from '../SignInModal'
+import { useState } from 'react'
 
 interface BookDetail {
   id: string
@@ -71,6 +74,11 @@ interface ModalProps {
 }
 
 export function Modal({ bookDetail, handleClose }: ModalProps) {
+  const [openSignIn, setOpenSignIn] = useState(false)
+
+  const { data: session } = useSession()
+  const userId = session?.user?.id
+
   const amountOfComments = bookDetail.ratings.length + 1
 
   const categories = bookDetail.categories.reduce((acc, current) => {
@@ -82,100 +90,113 @@ export function Modal({ bookDetail, handleClose }: ModalProps) {
   const categoriesWithoudLastComma = categories.slice(0, categories.length - 2)
 
   return (
-    <Container>
-      <Content>
-        <ButtonClose onClick={handleClose} type="button">
-          <X size={24} />
-        </ButtonClose>
+    <>
+      <Container>
+        <Content>
+          <ButtonClose onClick={handleClose} type="button">
+            <X size={24} />
+          </ButtonClose>
 
-        <BookDetail>
-          <Book>
-            <BookCover>
-              <Image
-                src={bookDetail.cover_url}
-                width={171}
-                height={242}
-                alt={bookDetail.name}
-              />
-            </BookCover>
+          <BookDetail>
+            <Book>
+              <BookCover>
+                <Image
+                  src={bookDetail.cover_url}
+                  width={171}
+                  height={242}
+                  alt={bookDetail.name}
+                />
+              </BookCover>
 
-            <BookInfo>
-              <div>
-                <BookTitle>{bookDetail.name}</BookTitle>
-                <BookAuthor>{bookDetail.author}</BookAuthor>
-              </div>
+              <BookInfo>
+                <div>
+                  <BookTitle>{bookDetail.name}</BookTitle>
+                  <BookAuthor>{bookDetail.author}</BookAuthor>
+                </div>
 
-              <div>
-                <Ratings quantity={bookDetail.avgRating} />
-                <BookQuantityRate>
-                  {amountOfComments} avaliações
-                </BookQuantityRate>
-              </div>
-            </BookInfo>
-          </Book>
+                <div>
+                  <Ratings quantity={bookDetail.avgRating} />
+                  <BookQuantityRate>
+                    {amountOfComments} avaliações
+                  </BookQuantityRate>
+                </div>
+              </BookInfo>
+            </Book>
 
-          <About>
-            <Category>
-              <BookmarkSimple size={24} />
+            <About>
+              <Category>
+                <BookmarkSimple size={24} />
 
-              <CategoryText>
-                <p>Categoria</p>
-                <span>{categoriesWithoudLastComma}</span>
-              </CategoryText>
-            </Category>
+                <CategoryText>
+                  <p>Categoria</p>
+                  <span>{categoriesWithoudLastComma}</span>
+                </CategoryText>
+              </Category>
 
-            <Page>
-              <BookOpen size={24} />
+              <Page>
+                <BookOpen size={24} />
 
-              <PageText>
-                <p>Páginas</p>
-                <span>{bookDetail.total_pages}</span>
-              </PageText>
-            </Page>
-          </About>
-        </BookDetail>
+                <PageText>
+                  <p>Páginas</p>
+                  <span>{bookDetail.total_pages}</span>
+                </PageText>
+              </Page>
+            </About>
+          </BookDetail>
 
-        <Comments>
-          <CommentsTitle>
-            <span>Avaliações</span>
-            <button type="button">Avaliar</button>
-          </CommentsTitle>
+          <Comments>
+            <CommentsTitle>
+              <span>Avaliações</span>
 
-          <ReviewComment />
+              {!session && (
+                <button onClick={() => setOpenSignIn(true)} type="button">
+                  Avaliar
+                </button>
+              )}
+            </CommentsTitle>
 
-          <CommentsList>
-            {bookDetail.ratings.map((rating) => (
-              <Comment key={rating.id}>
-                <HeaderComment>
-                  <UserInfo>
-                    <UserInfoImage>
-                      <Image
-                        src={rating.user.avatar_url}
-                        width={40}
-                        height={40}
-                        alt={rating.user.name}
-                      />
-                    </UserInfoImage>
-                    <UserInfoDescription>
-                      <p>{rating.user.name}</p>
-                      <span>
-                        {getRelativeTimeString(
-                          new Date(rating.created_at),
-                          'pt-BR',
-                        )}
-                      </span>
-                    </UserInfoDescription>
-                  </UserInfo>
+            {session && <ReviewComment />}
 
-                  <Ratings quantity={rating.rate} />
-                </HeaderComment>
+            <CommentsList>
+              {bookDetail.ratings.map((rating) => (
+                <Comment key={rating.id}>
+                  <HeaderComment>
+                    <UserInfo>
+                      <UserInfoImage>
+                        <Image
+                          src={rating.user.avatar_url}
+                          width={40}
+                          height={40}
+                          alt={rating.user.name}
+                        />
+                      </UserInfoImage>
+                      <UserInfoDescription>
+                        <p>{rating.user.name}</p>
+                        <span>
+                          {getRelativeTimeString(
+                            new Date(rating.created_at),
+                            'pt-BR',
+                          )}
+                        </span>
+                      </UserInfoDescription>
+                    </UserInfo>
 
-                <CommentText>{rating.description}</CommentText>
-              </Comment>
-            ))}
-          </CommentsList>
-        </Comments>
-      </Content>
-    </Container>
+                    <Ratings quantity={rating.rate} />
+                  </HeaderComment>
+
+                  <CommentText>{rating.description}</CommentText>
+                </Comment>
+              ))}
+            </CommentsList>
+          </Comments>
+        </Content>
+      </Container>
+
+      <SignInModal
+        bookId={bookDetail.id}
+        open={openSignIn}
+        onOpenChange={setOpenSignIn}
+      />
+    </>
   )
 }
