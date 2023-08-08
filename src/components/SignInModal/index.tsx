@@ -8,21 +8,23 @@ import { X } from 'phosphor-react'
 import { signIn } from 'next-auth/react'
 
 interface SignInModalProps {
-  bookId: string
+  bookId?: string | null
   open: boolean
   onOpenChange: (value: boolean) => void
 }
 
 export function SignInModal({ bookId, open, onOpenChange }: SignInModalProps) {
+  const callbackUrl = bookId ? `/explore?bookId=${bookId}` : '/explore'
+
   async function handleSignWithGoogle() {
     await signIn('google', {
-      callbackUrl: `/explore?bookId=${bookId}`,
+      callbackUrl,
     })
   }
 
   async function handleSignWithGithub() {
     await signIn('github', {
-      callbackUrl: `/explore?bookId=${bookId}`,
+      callbackUrl,
     })
   }
 
