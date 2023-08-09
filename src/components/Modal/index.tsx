@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import * as Dialog from '@radix-ui/react-dialog'
 import { BookOpen, BookmarkSimple, X } from 'phosphor-react'
 import {
   About,
@@ -25,6 +26,7 @@ import {
   UserInfoImage,
   UserInfoDescription,
   CommentsList,
+  Overlay,
 } from './styles'
 
 import { Ratings } from '../Ratings'
@@ -70,10 +72,11 @@ interface BookDetail {
 
 interface ModalProps {
   bookDetail: BookDetail
-  handleClose: () => void
+  open: boolean
+  onOpenChange: (value: boolean) => void
 }
 
-export function Modal({ bookDetail, handleClose }: ModalProps) {
+export function Modal({ bookDetail, open, onOpenChange }: ModalProps) {
   const [openSignIn, setOpenSignIn] = useState(false)
 
   const { data: session } = useSession()
@@ -90,106 +93,112 @@ export function Modal({ bookDetail, handleClose }: ModalProps) {
 
   return (
     <>
-      <Container>
-        <Content>
-          <ButtonClose onClick={handleClose} type="button">
-            <X size={24} />
-          </ButtonClose>
+      <Dialog.Root open={open} onOpenChange={onOpenChange}>
+        <Dialog.Trigger asChild />
+        <Dialog.Portal>
+          <Overlay />
+          <Content>
+            <Dialog.Close asChild>
+              <ButtonClose>
+                <X size={24} />
+              </ButtonClose>
+            </Dialog.Close>
 
-          <BookDetail>
-            <Book>
-              <BookCover>
-                <Image
-                  src={bookDetail.cover_url}
-                  width={171}
-                  height={242}
-                  alt={bookDetail.name}
-                />
-              </BookCover>
+            <BookDetail>
+              <Book>
+                <BookCover>
+                  <Image
+                    src={bookDetail.cover_url}
+                    width={171}
+                    height={242}
+                    alt={bookDetail.name}
+                  />
+                </BookCover>
 
-              <BookInfo>
-                <div>
-                  <BookTitle>{bookDetail.name}</BookTitle>
-                  <BookAuthor>{bookDetail.author}</BookAuthor>
-                </div>
+                <BookInfo>
+                  <div>
+                    <BookTitle>{bookDetail.name}</BookTitle>
+                    <BookAuthor>{bookDetail.author}</BookAuthor>
+                  </div>
 
-                <div>
-                  <Ratings quantity={bookDetail.avgRating} />
-                  <BookQuantityRate>
-                    {amountOfComments} avaliações
-                  </BookQuantityRate>
-                </div>
-              </BookInfo>
-            </Book>
+                  <div>
+                    <Ratings quantity={bookDetail.avgRating} />
+                    <BookQuantityRate>
+                      {amountOfComments} avaliações
+                    </BookQuantityRate>
+                  </div>
+                </BookInfo>
+              </Book>
 
-            <About>
-              <Category>
-                <BookmarkSimple size={24} />
+              <About>
+                <Category>
+                  <BookmarkSimple size={24} />
 
-                <CategoryText>
-                  <p>Categoria</p>
-                  <span>{categoriesWithoudLastComma}</span>
-                </CategoryText>
-              </Category>
+                  <CategoryText>
+                    <p>Categoria</p>
+                    <span>{categoriesWithoudLastComma}</span>
+                  </CategoryText>
+                </Category>
 
-              <Page>
-                <BookOpen size={24} />
+                <Page>
+                  <BookOpen size={24} />
 
-                <PageText>
-                  <p>Páginas</p>
-                  <span>{bookDetail.total_pages}</span>
-                </PageText>
-              </Page>
-            </About>
-          </BookDetail>
+                  <PageText>
+                    <p>Páginas</p>
+                    <span>{bookDetail.total_pages}</span>
+                  </PageText>
+                </Page>
+              </About>
+            </BookDetail>
 
-          <Comments>
-            <CommentsTitle>
-              <span>Avaliações</span>
+            <Comments>
+              <CommentsTitle>
+                <span>Avaliações</span>
 
-              {!session && (
-                <button onClick={() => setOpenSignIn(true)} type="button">
-                  Avaliar
-                </button>
-              )}
-            </CommentsTitle>
+                {!session && (
+                  <button onClick={() => setOpenSignIn(true)} type="button">
+                    Avaliar
+                  </button>
+                )}
+              </CommentsTitle>
 
-            {session && <ReviewComment />}
+              {session && <ReviewComment />}
 
-            <CommentsList>
-              {bookDetail.ratings.map((rating) => (
-                <Comment key={rating.id}>
-                  <HeaderComment>
-                    <UserInfo>
-                      <UserInfoImage>
-                        <Image
-                          src={rating.user.avatar_url}
-                          width={40}
-                          height={40}
-                          alt={rating.user.name}
-                        />
-                      </UserInfoImage>
-                      <UserInfoDescription>
-                        <p>{rating.user.name}</p>
-                        <span>
-                          {getRelativeTimeString(
-                            new Date(rating.created_at),
-                            'pt-BR',
-                          )}
-                        </span>
-                      </UserInfoDescription>
-                    </UserInfo>
+              <CommentsList>
+                {bookDetail.ratings.map((rating) => (
+                  <Comment key={rating.id}>
+                    <HeaderComment>
+                      <UserInfo>
+                        <UserInfoImage>
+                          <Image
+                            src={rating.user.avatar_url}
+                            width={40}
+                            height={40}
+                            alt={rating.user.name}
+                          />
+                        </UserInfoImage>
+                        <UserInfoDescription>
+                          <p>{rating.user.name}</p>
+                          <span>
+                            {getRelativeTimeString(
+                              new Date(rating.created_at),
+                              'pt-BR',
+                            )}
+                          </span>
+                        </UserInfoDescription>
+                      </UserInfo>
 
-                    <Ratings quantity={rating.rate} />
-                  </HeaderComment>
+                      <Ratings quantity={rating.rate} />
+                    </HeaderComment>
 
-                  <CommentText>{rating.description}</CommentText>
-                </Comment>
-              ))}
-            </CommentsList>
-          </Comments>
-        </Content>
-      </Container>
+                    <CommentText>{rating.description}</CommentText>
+                  </Comment>
+                ))}
+              </CommentsList>
+            </Comments>
+          </Content>
+        </Dialog.Portal>
+      </Dialog.Root>
 
       <SignInModal
         bookId={bookDetail.id}

@@ -1,25 +1,26 @@
+import * as Dialog from '@radix-ui/react-dialog'
 import { styled, keyframes } from '@stitches/react'
 
-const fadeIn = keyframes({
-  from: { opacity: 0 },
-  to: { opacity: 1 },
+const overlayShow = keyframes({
+  from: {
+    opacity: 0,
+  },
+  to: {
+    opacity: 1,
+  },
 })
 
-export const Container = styled('main', {
-  width: '100%',
-  height: '100vh',
+export const Overlay = styled(Dialog.Overlay, {
+  background: 'rgba(0 0 0 / 0.5)',
+  position: 'fixed',
+  inset: '0',
+  animation: `${overlayShow} 150ms cubic-bezier(0.16, 1, 0.3, 1)`,
+})
 
+export const Content = styled(Dialog.Content, {
   position: 'fixed',
   top: 0,
-  left: 0,
-
-  backgroundColor: 'rgba(0, 0, 0, 0.60)',
-
-  animation: `${fadeIn} 0.3s`,
-})
-
-export const Content = styled('aside', {
-  marginLeft: 'auto',
+  right: 0,
 
   width: '100%',
   maxWidth: '660px',
@@ -45,6 +46,17 @@ export const Content = styled('aside', {
     borderRadius: '$full',
     backgroundColor: '$gray600',
   },
+})
+
+export const Container = styled('main', {
+  width: '100%',
+  height: '100vh',
+
+  position: 'fixed',
+  top: 0,
+  left: 0,
+
+  backgroundColor: 'rgba(0, 0, 0, 0.60)',
 })
 
 export const ButtonClose = styled('button', {

@@ -123,7 +123,7 @@ export function ListBooks({ category, search }: ListBooksProps) {
       </Container>
 
       {modalOpen && book && (
-        <Modal bookDetail={book} handleClose={handleCloseModal} />
+        <Modal open={modalOpen} onOpenChange={setModalOpen} bookDetail={book} />
       )}
     </>
   )
