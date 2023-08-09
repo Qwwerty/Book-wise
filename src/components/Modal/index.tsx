@@ -77,7 +77,6 @@ export function Modal({ bookDetail, handleClose }: ModalProps) {
   const [openSignIn, setOpenSignIn] = useState(false)
 
   const { data: session } = useSession()
-  const userId = session?.user?.id
 
   const amountOfComments = bookDetail.ratings.length + 1
 
