@@ -33,6 +33,7 @@ export function ReviewComment() {
     handleSubmit,
     control,
     watch,
+    reset,
     formState: { isSubmitting, errors },
   } = useForm<FormData>({
     resolver: zodResolver(reviewCommentFormSchema),
@@ -95,7 +96,7 @@ export function ReviewComment() {
         </TextAreaContainer>
 
         <CommentActions>
-          <button>
+          <button onClick={() => reset({ rate: 0, comment: '' })} type="button">
             <X />
           </button>
           <button type="submit" disabled={isSubmitting}>
