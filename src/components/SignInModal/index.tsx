@@ -11,26 +11,32 @@ interface SignInModalProps {
   bookId?: string | null
   open: boolean
   onOpenChange: (value: boolean) => void
+  callbackUrl: string
 }
 
-export function SignInModal({ bookId, open, onOpenChange }: SignInModalProps) {
-  const callbackUrl = bookId ? `/explore?bookId=${bookId}` : '/explore'
+export function SignInModal({
+  bookId,
+  open,
+  onOpenChange,
+  callbackUrl,
+}: SignInModalProps) {
+  const url = bookId ? `/${callbackUrl}?bookId=${bookId}` : `/${callbackUrl}`
 
   async function handleSignWithGoogle() {
     await signIn('google', {
-      callbackUrl,
+      callbackUrl: url,
     })
   }
 
   async function handleSignWithGithub() {
     await signIn('github', {
-      callbackUrl,
+      callbackUrl: url,
     })
   }
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
-      <Dialog.Trigger />
+      <Dialog.Trigger asChild />
       <Dialog.Portal>
         <Overlay />
         <Content>

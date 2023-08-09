@@ -195,6 +195,7 @@ export function Modal({ bookDetail, handleClose }: ModalProps) {
         bookId={bookDetail.id}
         open={openSignIn}
         onOpenChange={setOpenSignIn}
+        callbackUrl="explore"
       />
     </>
   )
