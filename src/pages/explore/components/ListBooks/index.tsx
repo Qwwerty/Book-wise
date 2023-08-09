@@ -4,7 +4,7 @@ import { Container } from './styles'
 import { api } from '../../../../lib/axios'
 import { Modal } from '../../../../components/Modal'
 import { useEffect, useState } from 'react'
-import { Router, useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 
 interface Book {
   id: string
