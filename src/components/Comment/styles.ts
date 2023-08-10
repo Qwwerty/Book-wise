@@ -1,4 +1,13 @@
-import { styled } from '../../../styles'
+import { styled, keyframes } from '../../../styles'
+
+const rotation = keyframes({
+  '0%': {
+    transform: 'rotate(0deg)',
+  },
+  '100%': {
+    transform: 'rotate(360deg)',
+  },
+})
 
 export const Container = styled('form', {
   width: '100%',
@@ -122,6 +131,32 @@ export const CommentActions = styled('div', {
         color: '$grenn100',
       },
     },
+  },
+})
+
+export const SpinnerButton = styled('button', {
+  all: 'unset',
+
+  display: 'flex',
+  padding: ' 0.5rem',
+  justifyContent: 'center',
+  alignItems: 'center',
+
+  borderRadius: '0.25rem',
+  backgroundColor: '$gray600',
+  cursor: 'not-allowed',
+
+  div: {
+    width: '1rem',
+    height: '1rem',
+
+    border: '2px solid transparent',
+    borderBottomColor: '$purple100',
+    borderRightColor: '$purple100',
+    borderLeftColor: '$purple100',
+    borderRadius: '50%',
+
+    animation: `${rotation} 1s linear infinite`,
   },
 })
 

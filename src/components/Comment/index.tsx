@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Image from 'next/image'
-import { Check, X } from 'phosphor-react'
+import { Check, Spinner, X } from 'phosphor-react'
 import { RatingsAvailable } from '../RatingsAvailable'
 import { Controller, useForm } from 'react-hook-form'
 import {
@@ -11,6 +11,7 @@ import {
   FormError,
   Header,
   IdentificationUser,
+  SpinnerButton,
   TextAreaContainer,
   TextAreaFooter,
   TextAreaLimit,
@@ -45,8 +46,12 @@ export function ReviewComment() {
 
   const comment = watch('comment') ?? ''
 
-  function handleReviewComment(data: FormData) {
-    console.log(data)
+  async function handleReviewComment(data: FormData) {
+    return new Promise((resolve: any) => {
+      setTimeout(() => {
+        resolve()
+      }, 5000)
+    })
   }
 
   return (
@@ -96,12 +101,23 @@ export function ReviewComment() {
         </TextAreaContainer>
 
         <CommentActions>
-          <button onClick={() => reset({ rate: 0, comment: '' })} type="button">
-            <X />
-          </button>
-          <button type="submit" disabled={isSubmitting}>
-            <Check />
-          </button>
+          {isSubmitting ? (
+            <SpinnerButton>
+              <div />
+            </SpinnerButton>
+          ) : (
+            <>
+              <button
+                onClick={() => reset({ rate: 0, comment: '' })}
+                type="button"
+              >
+                <X />
+              </button>
+              <button type="submit" disabled={isSubmitting}>
+                <Check />
+              </button>
+            </>
+          )}
         </CommentActions>
       </Content>
     </Container>
