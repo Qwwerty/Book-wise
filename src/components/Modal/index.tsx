@@ -16,7 +16,6 @@ import {
   Comments,
   CommentsTitle,
   Comment,
-  Container,
   Content,
   Page,
   PageText,
@@ -35,15 +34,17 @@ import { ReviewComment } from '../Comment'
 import { useSession } from 'next-auth/react'
 import { SignInModal } from '../SignInModal'
 import { useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { api } from '../../lib/axios'
 
-interface BookDetail {
+interface Book {
   id: string
   name: string
   author: string
   summary: string
   cover_url: string
-  total_pages: number
   avgRating: number
+  total_pages: number
   created_at: string
   categories: Array<{
     book_id: string
@@ -71,25 +72,38 @@ interface BookDetail {
 }
 
 interface ModalProps {
-  bookDetail: BookDetail
+  bookId: string
   open: boolean
   onOpenChange: (value: boolean) => void
 }
 
-export function Modal({ bookDetail, open, onOpenChange }: ModalProps) {
+export function Modal({ bookId, open, onOpenChange }: ModalProps) {
   const [openSignIn, setOpenSignIn] = useState(false)
 
   const { data: session } = useSession()
 
-  const amountOfComments = bookDetail.ratings.length + 1
+  const { data: book } = useQuery<Book>(
+    [`book-${bookId}`],
+    async () => {
+      if (bookId === '') return null
 
-  const categories = bookDetail.categories.reduce((acc, current) => {
-    acc += `${current.category.name}, `
+      const { data } = await api.get(`/books/details/${bookId}`)
 
-    return acc
-  }, '')
+      return data?.book ?? {}
+    },
+    {
+      enabled: open,
+    },
+  )
 
-  const categoriesWithoudLastComma = categories.slice(0, categories.length - 2)
+  const amountOfComments = book?.ratings?.length ?? 0
+
+  const canRate = book?.ratings.every(
+    (rate) => rate.user_id !== session?.user.id,
+  )
+
+  const categories =
+    book?.categories?.map((x) => x?.category?.name)?.join(', ') ?? ''
 
   return (
     <>
@@ -104,104 +118,113 @@ export function Modal({ bookDetail, open, onOpenChange }: ModalProps) {
               </ButtonClose>
             </Dialog.Close>
 
-            <BookDetail>
-              <Book>
-                <BookCover>
-                  <Image
-                    src={bookDetail.cover_url}
-                    width={171}
-                    height={242}
-                    alt={bookDetail.name}
-                  />
-                </BookCover>
+            {!book ? (
+              <p>Carregando...</p>
+            ) : (
+              <>
+                <BookDetail>
+                  <Book>
+                    <BookCover>
+                      <Image
+                        src={book.cover_url}
+                        width={171}
+                        height={242}
+                        alt={book.name}
+                      />
+                    </BookCover>
 
-                <BookInfo>
-                  <div>
-                    <BookTitle>{bookDetail.name}</BookTitle>
-                    <BookAuthor>{bookDetail.author}</BookAuthor>
-                  </div>
+                    <BookInfo>
+                      <div>
+                        <BookTitle>{book.name}</BookTitle>
+                        <BookAuthor>{book.author}</BookAuthor>
+                      </div>
 
-                  <div>
-                    <Ratings quantity={bookDetail.avgRating} />
-                    <BookQuantityRate>
-                      {amountOfComments} avaliações
-                    </BookQuantityRate>
-                  </div>
-                </BookInfo>
-              </Book>
+                      <div>
+                        <Ratings quantity={book.avgRating} />
+                        <BookQuantityRate>
+                          {amountOfComments}
+                          {amountOfComments === 1 ? 'avaliação' : 'avaliações'}
+                        </BookQuantityRate>
+                      </div>
+                    </BookInfo>
+                  </Book>
 
-              <About>
-                <Category>
-                  <BookmarkSimple size={24} />
+                  <About>
+                    <Category>
+                      <BookmarkSimple size={24} />
 
-                  <CategoryText>
-                    <p>Categoria</p>
-                    <span>{categoriesWithoudLastComma}</span>
-                  </CategoryText>
-                </Category>
+                      <CategoryText>
+                        <p>Categoria</p>
+                        <span>{categories}</span>
+                      </CategoryText>
+                    </Category>
 
-                <Page>
-                  <BookOpen size={24} />
+                    <Page>
+                      <BookOpen size={24} />
 
-                  <PageText>
-                    <p>Páginas</p>
-                    <span>{bookDetail.total_pages}</span>
-                  </PageText>
-                </Page>
-              </About>
-            </BookDetail>
+                      <PageText>
+                        <p>Páginas</p>
+                        <span>{book.total_pages}</span>
+                      </PageText>
+                    </Page>
+                  </About>
+                </BookDetail>
 
-            <Comments>
-              <CommentsTitle>
-                <span>Avaliações</span>
+                <Comments>
+                  <CommentsTitle>
+                    <span>Avaliações</span>
 
-                {!session && (
-                  <button onClick={() => setOpenSignIn(true)} type="button">
-                    Avaliar
-                  </button>
-                )}
-              </CommentsTitle>
+                    {!session && (
+                      <button onClick={() => setOpenSignIn(true)} type="button">
+                        Avaliar
+                      </button>
+                    )}
+                  </CommentsTitle>
 
-              {session && <ReviewComment />}
+                  {session && canRate && (
+                    <ReviewComment bookId={book.id} user={session.user} />
+                  )}
 
-              <CommentsList>
-                {bookDetail.ratings.map((rating) => (
-                  <Comment key={rating.id}>
-                    <HeaderComment>
-                      <UserInfo>
-                        <UserInfoImage>
-                          <Image
-                            src={rating.user.avatar_url}
-                            width={40}
-                            height={40}
-                            alt={rating.user.name}
-                          />
-                        </UserInfoImage>
-                        <UserInfoDescription>
-                          <p>{rating.user.name}</p>
-                          <span>
-                            {getRelativeTimeString(
-                              new Date(rating.created_at),
-                              'pt-BR',
-                            )}
-                          </span>
-                        </UserInfoDescription>
-                      </UserInfo>
+                  <CommentsList>
+                    {book.ratings.map((rating) => (
+                      <Comment key={rating.id}>
+                        <HeaderComment>
+                          <UserInfo>
+                            <UserInfoImage>
+                              <Image
+                                src={rating.user.avatar_url}
+                                width={40}
+                                height={40}
+                                alt={rating.user.name}
+                              />
+                            </UserInfoImage>
+                            <UserInfoDescription>
+                              <p>{rating.user.name}</p>
+                              <span>
+                                {getRelativeTimeString(
+                                  new Date(rating.created_at),
+                                  'pt-BR',
+                                )}
+                              </span>
+                            </UserInfoDescription>
+                          </UserInfo>
 
-                      <Ratings quantity={rating.rate} />
-                    </HeaderComment>
+                          <Ratings quantity={rating.rate} />
+                        </HeaderComment>
 
-                    <CommentText>{rating.description}</CommentText>
-                  </Comment>
-                ))}
-              </CommentsList>
-            </Comments>
+                        <CommentText>{rating.description}</CommentText>
+                      </Comment>
+                    ))}
+                  </CommentsList>
+                </Comments>
+              </>
+            )}
           </Content>
         </Dialog.Portal>
       </Dialog.Root>
 
       <SignInModal
-        bookId={bookDetail.id}
+        bookId={book?.id ?? ''}
         open={openSignIn}
         onOpenChange={setOpenSignIn}
         callbackUrl="explore"

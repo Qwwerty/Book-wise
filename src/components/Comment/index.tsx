@@ -1,9 +1,10 @@
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Image from 'next/image'
-import { Check, Spinner, X } from 'phosphor-react'
+import { Check, X } from 'phosphor-react'
 import { RatingsAvailable } from '../RatingsAvailable'
 import { Controller, useForm } from 'react-hook-form'
+import { ToastContainer, toast } from 'react-toastify'
 import {
   CommentActions,
   Container,
@@ -17,10 +18,21 @@ import {
   TextAreaLimit,
 } from './styles'
 import { UserInfoImage } from '../Modal/styles'
+import { api } from '../../lib/axios'
+import axios from 'axios'
+import { queryClient } from '../../lib/react-query'
+
+interface ReviewCommentProps {
+  bookId: string
+  user: {
+    name: string
+    avatar_url: string
+  }
+}
 
 const reviewCommentFormSchema = z.object({
   rate: z.number().min(1).max(5),
-  comment: z
+  description: z
     .string()
     .min(10, 'O mínimo é de 10 caracteres.')
     .max(450, 'O máximo é de 450 caracteres.'),
@@ -28,7 +40,7 @@ const reviewCommentFormSchema = z.object({
 
 type FormData = z.infer<typeof reviewCommentFormSchema>
 
-export function ReviewComment() {
+export function ReviewComment({ bookId, user }: ReviewCommentProps) {
   const {
     register,
     handleSubmit,
@@ -40,18 +52,34 @@ export function ReviewComment() {
     resolver: zodResolver(reviewCommentFormSchema),
     defaultValues: {
       rate: 0,
-      comment: '',
+      description: '',
     },
   })
 
-  const comment = watch('comment') ?? ''
+  const comment = watch('description') ?? ''
 
   async function handleReviewComment(data: FormData) {
-    return new Promise((resolve: any) => {
-      setTimeout(() => {
-        resolve()
-      }, 5000)
-    })
+    const { rate, description } = data
+
+    try {
+      await api.post(`ratings/${bookId}/rate`, {
+        rate,
+        description,
+      })
+
+      reset({
+        rate: 0,
+        description: '',
+      })
+
+      // queryClient.invalidateQueries([`book-${bookId}`])
+      queryClient.invalidateQueries()
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error('Você já avaliou este livro.', { theme: 'colored' })
+      }
+      console.error(error)
+    }
   }
 
   return (
@@ -60,13 +88,13 @@ export function ReviewComment() {
         <IdentificationUser>
           <UserInfoImage>
             <Image
-              src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=761&q=80"
+              src={user.avatar_url}
               width={40}
               height={40}
-              alt=""
+              alt={user.name}
             />
           </UserInfoImage>
-          <span>Cristofer Rosser</span>
+          <span>{user.name}</span>
         </IdentificationUser>
 
         <Controller
@@ -89,11 +117,11 @@ export function ReviewComment() {
         <TextAreaContainer>
           <textarea
             placeholder="Escreva sua avaliação"
-            {...register('comment')}
+            {...register('description')}
           />
 
           <TextAreaFooter>
-            <FormError>{errors.comment?.message}</FormError>
+            <FormError>{errors.description?.message}</FormError>
             <TextAreaLimit>
               {comment.length}/{450}
             </TextAreaLimit>
@@ -108,7 +136,7 @@ export function ReviewComment() {
           ) : (
             <>
               <button
-                onClick={() => reset({ rate: 0, comment: '' })}
+                onClick={() => reset({ rate: 0, description: '' })}
                 type="button"
               >
                 <X />
@@ -120,6 +148,8 @@ export function ReviewComment() {
           )}
         </CommentActions>
       </Content>
+
+      <ToastContainer />
     </Container>
   )
 }
