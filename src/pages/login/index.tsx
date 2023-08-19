@@ -1,16 +1,11 @@
-import Image from 'next/image'
-import { Container, WrapperImage } from './styles'
-import { Authentications } from './components/Authentications'
-
-import coverImg from '../../assets/cover-home.png'
+import { Container } from './styles'
+import { Background } from '@components/molecules/Background'
+import { Authentications } from '@components/organims/Authentications'
 
 export default function Login() {
   return (
     <Container>
-      <WrapperImage>
-        <Image src={coverImg} width={598} height={912} alt="Cover" />
-      </WrapperImage>
-
+      <Background />
       <Authentications />
     </Container>
   )

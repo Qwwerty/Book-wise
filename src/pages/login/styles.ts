@@ -11,14 +11,3 @@ export const Container = styled('main', {
   display: 'grid',
   gridTemplateColumns: '1.1fr 1fr',
 })
-
-export const WrapperImage = styled('section', {
-  width: '100%',
-  maxWidth: '37.38rem',
-  height: '100%',
-
-  img: {
-    width: '100%',
-    height: 'calc(100vh - 2.5rem)',
-  },
-})

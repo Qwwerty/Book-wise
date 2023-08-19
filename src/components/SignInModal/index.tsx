@@ -50,11 +50,21 @@ export function SignInModal({
 
           <Actions>
             <button onClick={handleSignWithGoogle}>
-              <Image src={googleImg} width={32} height={32} alt="Google" />
+              <Image
+                src="/icons/google.png"
+                width={32}
+                height={32}
+                alt="Google"
+              />
               Entrar com Google
             </button>
             <button onClick={handleSignWithGithub}>
-              <Image src={githubImg} width={32} height={32} alt="Google" />
+              <Image
+                src="/icons/github.png"
+                width={32}
+                height={32}
+                alt="Google"
+              />
               Entrar com GitHub
             </button>
           </Actions>
