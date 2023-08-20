@@ -12,6 +12,7 @@ export const Container = styled('button', {
 
   backgroundColor: '$gray600',
   borderRadius: '8px',
+  boxSizing: 'border-box',
 
   cursor: 'pointer',
 

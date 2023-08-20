@@ -1,5 +1,5 @@
-import { Container } from './styles'
 import { BackgroundImage } from '@components/atoms/BackgroundImage'
+import { Container } from './styles'
 
 export function Background() {
   return (

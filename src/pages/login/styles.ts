@@ -10,4 +10,11 @@ export const Container = styled('main', {
 
   display: 'grid',
   gridTemplateColumns: '1.1fr 1fr',
+  gap: '1.125rem',
+
+  '@media (max-width: 1024px)': {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 })
