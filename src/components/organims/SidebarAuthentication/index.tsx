@@ -1,6 +1,6 @@
-import { SignInButton } from '@components/molecules/SignInButton'
 import { SignOutButton } from '@components/molecules/SignOutButton'
 import { useSession } from 'next-auth/react'
+import { SidebarSignIn } from '../SidebarSignIn'
 
 export function SidebarAuthentication() {
   const session = useSession()
@@ -11,5 +11,5 @@ export function SidebarAuthentication() {
     return <SignOutButton />
   }
 
-  return <SignInButton />
+  return <SidebarSignIn />
 }

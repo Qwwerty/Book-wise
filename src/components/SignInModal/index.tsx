@@ -1,9 +1,6 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import Image from 'next/image'
 import { Actions, ButtonClose, Content, Overlay } from './styles'
-
-import googleImg from '../../assets/icons/google.png'
-import githubImg from '../../assets/icons/github.png'
 import { X } from 'phosphor-react'
 import { signIn } from 'next-auth/react'
 

@@ -53,6 +53,8 @@ export const ButtonClose = styled(Dialog.Close, {
   color: '$gray400',
   transition: 'color 200ms ease',
 
+  cursor: 'pointer',
+
   '&:hover': {
     color: '$gray500',
   },
@@ -69,6 +71,8 @@ export const Actions = styled('div', {
     display: 'flex',
     alignItems: 'center',
     gap: '1.25rem',
+
+    cursor: 'pointer',
 
     padding: '1.25rem 1.5rem',
     borderRadius: '0.5rem',

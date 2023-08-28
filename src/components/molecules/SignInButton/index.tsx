@@ -1,10 +1,11 @@
 import { SignIn } from 'phosphor-react'
 import { Container, Text } from './styles'
-import { signIn } from 'next-auth/react'
 
-export function SignInButton() {
+type props = React.ComponentProps<typeof Container>
+
+export function SignInButton({ ...rest }: props) {
   return (
-    <Container onClick={() => signIn()}>
+    <Container {...rest}>
       <Text>Fazer login</Text> <SignIn size={20} />
     </Container>
   )
