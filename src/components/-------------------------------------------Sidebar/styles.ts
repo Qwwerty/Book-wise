@@ -96,45 +96,4 @@ export const ButtonLogin = styled('button', {
   },
 })
 
-export const ButtonSignOut = styled('button', {
-  all: 'unset',
-
-  display: 'flex',
-  alignItems: 'center',
-  gap: '$3',
-
-  color: '$gray200',
-  fontSize: '$sm',
-  fontWeight: '$bold',
-
-  svg: {
-    width: '20px',
-    height: '20px',
-    color: '#F75A68',
-  },
-
-  '&:hover': {
-    filter: 'brightness(0.9)',
-    transition: 'filter 0.2s all',
-  },
-
-  div: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-
-    width: 32,
-    height: 32,
-    borderRadius: '$full',
-    overflow: 'hidden',
-
-    background: 'linear-gradient(180deg, #7FD1CC 0%, #9694F5 100%)',
-
-    img: {
-      width: 28,
-      height: 28,
-      objectFit: 'cover',
-      borderRadius: '$full',
-    },
-  },
-})
+export const ButtonSignOut = styled('button', {})
