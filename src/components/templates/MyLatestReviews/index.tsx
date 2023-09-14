@@ -1,8 +1,8 @@
-import { PageTitle } from '@components/PageTitle'
-import { Container } from './styles'
 import { ChartLineUp } from 'phosphor-react'
-import { ListRecentReviews } from 'src/pages/home/components/LatestRatings/components/ListRecentReviews'
+import { PageTitle } from '@components/PageTitle'
 import { MyLastRead } from '@components/organims/MyLastRead'
+import { Container } from './styles'
+import { ListRecentReviews } from '@components/organims/ListRecentReviews'
 
 export function MyLatestReviews() {
   return (

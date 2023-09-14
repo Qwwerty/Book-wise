@@ -1,9 +1,9 @@
-import { CardReview } from './components/CardReview'
-import { Container, Title } from './styles'
-import { api } from '../../../../../../lib/axios'
+import { api } from '@lib/axios'
 import { useQuery } from '@tanstack/react-query'
+import { CardReview } from '@components/organims/CardReview'
+import { Container, Title } from './styles'
 
-interface Rating {
+interface IRating {
   id: string
   rate: number
   user: {
@@ -22,11 +22,14 @@ interface Rating {
 }
 
 export function ListRecentReviews() {
-  const { data: ratings } = useQuery<Rating[]>(['ratings/latest'], async () => {
-    const { data } = await api.get('/ratings/latest')
+  const { data: ratings } = useQuery<IRating[]>(
+    ['ratings/latest'],
+    async () => {
+      const { data } = await api.get('/ratings/latest')
 
-    return data?.ratings ?? []
-  })
+      return data?.ratings ?? []
+    },
+  )
 
   return (
     <Container>
