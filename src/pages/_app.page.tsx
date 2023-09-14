@@ -9,7 +9,7 @@ import { queryClient } from '../lib/react-query'
 
 import 'react-toastify/dist/ReactToastify.css'
 
-export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
 }
 
