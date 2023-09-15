@@ -1,4 +1,4 @@
-import { styled } from '../../../../../styles'
+import { styled } from '@styles/index'
 
 export const Container = styled('div', {
   width: '100%',
@@ -36,12 +36,4 @@ export const Navigation = styled('div', {
       transition: 'color .2s all',
     },
   },
-})
-
-export const ListPopularBooks = styled('div', {
-  marginTop: '$4',
-
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '$3',
 })

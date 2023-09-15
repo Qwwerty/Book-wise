@@ -1,9 +1,8 @@
 import Image from 'next/image'
 import { BookAuthor, BookName, Container, Description } from './styles'
+import { Ratings } from '@components/Ratings'
 
-import { Ratings } from '../../../../../../components/Ratings'
-
-interface Book {
+interface IBooks {
   id: string
   name: string
   author: string
@@ -12,7 +11,7 @@ interface Book {
 }
 
 interface PopularBookProps {
-  book: Book
+  book: IBooks
 }
 
 export function PopularBook({ book }: PopularBookProps) {

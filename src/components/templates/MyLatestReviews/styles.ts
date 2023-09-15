@@ -10,10 +10,14 @@ export const Container = styled('div', {
   paddingRight: '$2',
 
   '&::-webkit-scrollbar': {
-    width: 2,
+    width: '0.2rem',
+    marginLeft: '10px',
+    backgroundColor: '$gray700',
   },
 
   '&::-webkit-scrollbar-thumb': {
-    backgroundColor: 'transparent',
+    height: '20rem',
+    borderRadius: '$full',
+    backgroundColor: '$gray600',
   },
 })
