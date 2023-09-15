@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { Button, Container } from './styles'
-import { api } from '../../lib/axios'
+import { api } from '@lib/axios'
 
 interface Category {
   id: string

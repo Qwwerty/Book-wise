@@ -1,4 +1,4 @@
-import { styled } from '../../../styles'
+import { styled } from '@styles/index'
 
 export const Container = styled('div', {
   display: 'flex',
@@ -13,6 +13,8 @@ export const Button = styled('button', {
   borderRadius: '$full',
   padding: '$1 $4',
   color: '$purple100',
+
+  cursor: 'pointer',
 
   transition: 'all 300ms ease-out',
 
