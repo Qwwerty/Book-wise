@@ -2,10 +2,16 @@ import { signIn } from 'next-auth/react'
 import { Image } from '@components/atoms/Image'
 import { Container, Description } from './styles'
 
-export function AuthenticationGithubMethod() {
+interface IAuthenticationGithubMethod {
+  callbackUrl: string
+}
+
+export function AuthenticationGithubMethod({
+  callbackUrl,
+}: IAuthenticationGithubMethod) {
   async function handleSign() {
     await signIn('github', {
-      callbackUrl: '/home',
+      callbackUrl,
     })
   }
 

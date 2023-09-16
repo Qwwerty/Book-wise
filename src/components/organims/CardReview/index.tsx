@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Container } from './styles'
 import { getRelativeTimeString } from '@utils/getRelativeTimeString'
-import { CardBook } from '../CardBook'
 import { CardHeader } from '../CardHeader'
+import { CardBookReview } from '../CardBookReview'
 
 interface IRating {
   id: string
@@ -34,7 +34,7 @@ export function CardReview({ rating }: CardReviewProps) {
   return (
     <Container isShowMore={isShowMore}>
       <CardHeader rating={rating} distance={distance} />
-      <CardBook
+      <CardBookReview
         rating={rating}
         isShowMore={isShowMore}
         setIsShowMore={setIsShowMore}

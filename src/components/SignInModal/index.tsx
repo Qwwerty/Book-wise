@@ -1,8 +1,9 @@
 import * as Dialog from '@radix-ui/react-dialog'
-import Image from 'next/image'
+
 import { Actions, ButtonClose, Content, Overlay } from './styles'
 import { X } from 'phosphor-react'
-import { signIn } from 'next-auth/react'
+import { AuthenticationGoogleMethod } from '@components/molecules/AuthenticationGoogleMethod'
+import { AuthenticationGithubMethod } from '@components/molecules/AuthenticationGithubMethod'
 
 interface SignInModalProps {
   bookId?: string | null
@@ -19,18 +20,6 @@ export function SignInModal({
 }: SignInModalProps) {
   const url = bookId ? `/${callbackUrl}?bookId=${bookId}` : `/${callbackUrl}`
 
-  async function handleSignWithGoogle() {
-    await signIn('google', {
-      callbackUrl: url,
-    })
-  }
-
-  async function handleSignWithGithub() {
-    await signIn('github', {
-      callbackUrl: url,
-    })
-  }
-
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Trigger asChild />
@@ -46,24 +35,8 @@ export function SignInModal({
           <h6>Faça login para deixar sua avaliação</h6>
 
           <Actions>
-            <button onClick={handleSignWithGoogle}>
-              <Image
-                src="/icons/google.png"
-                width={32}
-                height={32}
-                alt="Google"
-              />
-              Entrar com Google
-            </button>
-            <button onClick={handleSignWithGithub}>
-              <Image
-                src="/icons/github.png"
-                width={32}
-                height={32}
-                alt="Google"
-              />
-              Entrar com GitHub
-            </button>
+            <AuthenticationGoogleMethod callbackUrl={url} />
+            <AuthenticationGithubMethod callbackUrl={url} />
           </Actions>
         </Content>
       </Dialog.Portal>

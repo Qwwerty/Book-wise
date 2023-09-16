@@ -1,4 +1,4 @@
-import { styled, keyframes } from '../../../styles'
+import { styled, keyframes } from '@styles/index'
 
 const rotation = keyframes({
   '0%': {

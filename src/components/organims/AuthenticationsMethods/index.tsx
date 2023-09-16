@@ -6,8 +6,8 @@ import { AuthenticationVisitorMethod } from '@components/molecules/Authenticatio
 export function AuthenticationsMethods() {
   return (
     <Container>
-      <AuthenticationGoogleMethod />
-      <AuthenticationGithubMethod />
+      <AuthenticationGoogleMethod callbackUrl="/home" />
+      <AuthenticationGithubMethod callbackUrl="/home" />
       <AuthenticationVisitorMethod />
     </Container>
   )

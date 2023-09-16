@@ -64,29 +64,4 @@ export const Actions = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   gap: '1rem',
-
-  button: {
-    all: 'unset',
-
-    display: 'flex',
-    alignItems: 'center',
-    gap: '1.25rem',
-
-    cursor: 'pointer',
-
-    padding: '1.25rem 1.5rem',
-    borderRadius: '0.5rem',
-    backgroundColor: '$gray600',
-
-    fontSize: '1.125rem',
-    color: '$gray200',
-    fontWeight: '$bold',
-    lineHeight: '$base',
-
-    transition: 'color 300ms ease-in-out',
-
-    '&:hover': {
-      backgroundColor: '$gray500',
-    },
-  },
 })

@@ -1,10 +1,10 @@
-import { useQuery } from '@tanstack/react-query'
-import { Card } from './components/Card'
-import { Container } from './styles'
-import { api } from '../../../../lib/axios'
-import { Modal } from '../../../../components/Modal'
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import { useQuery } from '@tanstack/react-query'
+import { api } from '@lib/axios'
+import { CardBook } from '@components/organims/CardBook'
+import { Container } from './styles'
+import { ModalBookReview } from '../ModalBookReview'
 
 interface Book {
   id: string
@@ -69,16 +69,24 @@ export function ListBooks({ category, search }: ListBooksProps) {
   }, [router, router.query.bookId])
 
   return (
-    <>
+    <Fragment>
       <Container>
         {filteredBooks?.map((book) => (
-          <Card book={book} handleSelectBook={handleSelectBook} key={book.id} />
+          <CardBook
+            book={book}
+            handleSelectBook={handleSelectBook}
+            key={book.id}
+          />
         ))}
       </Container>
 
       {modalOpen && bookId && (
-        <Modal open={modalOpen} onOpenChange={setModalOpen} bookId={bookId} />
+        <ModalBookReview
+          open={modalOpen}
+          onOpenChange={setModalOpen}
+          bookId={bookId}
+        />
       )}
-    </>
+    </Fragment>
   )
 }

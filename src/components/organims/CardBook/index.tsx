@@ -1,66 +1,46 @@
-import { Image } from '@components/atoms/Image'
-import { Author, Container, Description, Title, Text } from './styles'
+import Image from 'next/image'
+import { AlreadyRead, Container, Description, Title } from './styles'
+import { Ratings } from '@components/Ratings'
 
-interface IRating {
+interface Book {
   id: string
-  rate: number
+  name: string
+  author: string
+  summary: string
+  cover_url: string
+  total_pages: number
   created_at: string
-  user: {
-    id: string
-    name: string
-    avatar_url: string
-  }
-  book: {
-    id: string
-    name: string
-    author: string
-    summary: string
-    cover_url: string
-  }
+  ratings: number
+  avgRating: number
+  alreadyRead: boolean
 }
 
-interface ICardBook {
-  rating: IRating
-  isShowMore: boolean
-  setIsShowMore: (value: boolean) => void
+interface CardBook {
+  book: Book
+  handleSelectBook: (bookId: string) => void
 }
 
-const MAX_LENGTH = 229
-
-export function CardBook({ rating, isShowMore, setIsShowMore }: ICardBook) {
-  const hasOverflowText = rating.book.summary.length > MAX_LENGTH
+export function CardBook({ book, handleSelectBook }: CardBook) {
+  function handleOpenBook() {
+    handleSelectBook(book.id)
+  }
 
   return (
-    <Container>
-      <Image
-        src={rating.book.cover_url}
-        width={108}
-        height={152}
-        alt={rating.book.name}
-      />
+    <>
+      <Container onClick={handleOpenBook}>
+        {book.alreadyRead && <AlreadyRead>LIDO</AlreadyRead>}
 
-      <Description>
-        <Title>{rating.book.name}</Title>
-        <Author>{rating.book.author}</Author>
+        <Image src={book.cover_url} width={108} height={152} alt={book.name} />
 
-        {!hasOverflowText ? (
-          <Text>{rating.book.summary}</Text>
-        ) : (
-          <>
-            {!isShowMore ? (
-              <Text>
-                {String(rating.book.summary).slice(0, MAX_LENGTH).concat('...')}
+        <Description>
+          <Title>
+            <p>{book.name}</p>
+            <span>{book.author}</span>
+          </Title>
 
-                <button onClick={() => setIsShowMore(!isShowMore)}>
-                  ver mais
-                </button>
-              </Text>
-            ) : (
-              <Text>{rating.book.summary}</Text>
-            )}
-          </>
-        )}
-      </Description>
-    </Container>
+          <Ratings quantity={book.avgRating} />
+        </Description>
+      </Container>
+    </>
   )
 }

@@ -1,11 +1,12 @@
-import { Binoculars, MagnifyingGlass } from 'phosphor-react'
+import { Binoculars } from 'phosphor-react'
 import { PageTitle } from '../../components/PageTitle'
 import { DefaultLayout } from '../../layouts/DefaultLayout'
 import { NextPageWithLayout } from '../_app.page'
-import { Container, Search, SearchContent } from './styles'
-import { Categories } from '../../components/Categories'
+import { Container } from './styles'
 import { useState } from 'react'
-import { ListBooks } from './components/ListBooks'
+import { InputSearch } from '@components/molecules/InputSearch'
+import { Categories } from '@components/molecules/Categories'
+import { ListBooks } from '@components/organims/ListBooks'
 
 const Explore: NextPageWithLayout = () => {
   const [category, setCategory] = useState<string | null>(null)
@@ -19,16 +20,7 @@ const Explore: NextPageWithLayout = () => {
         css={{ marginBottom: '2.75rem' }}
       />
 
-      <Search>
-        <SearchContent>
-          <input
-            onChange={(event) => setSearch(event.target.value)}
-            placeholder="Buscar livro ou autor"
-          />
-          <MagnifyingGlass size={20} />
-        </SearchContent>
-      </Search>
-
+      <InputSearch setSearch={setSearch} />
       <Categories handleSetCategory={setCategory} category={category} />
       <ListBooks category={category} search={search} />
     </Container>

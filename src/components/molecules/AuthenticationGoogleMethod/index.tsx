@@ -2,10 +2,16 @@ import { signIn } from 'next-auth/react'
 import { Image } from '@components/atoms/Image'
 import { Container, Description } from './styles'
 
-export function AuthenticationGoogleMethod() {
+interface IAuthenticationGoogleMethod {
+  callbackUrl: string
+}
+
+export function AuthenticationGoogleMethod({
+  callbackUrl,
+}: IAuthenticationGoogleMethod) {
   async function handleSign() {
     await signIn('google', {
-      callbackUrl: '/home',
+      callbackUrl,
     })
   }
 
