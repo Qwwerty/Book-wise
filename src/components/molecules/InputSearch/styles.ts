@@ -8,14 +8,11 @@ export const Container = styled('div', {
 })
 
 export const SearchContent = styled('div', {
-  marginTop: '-4.5rem',
-
   display: 'flex',
   alignItems: 'center',
   gap: '$2',
 
   width: '100%',
-  maxWidth: '27.06rem',
   height: '3rem',
   border: '1px solid $gray500',
   borderRadius: 4,

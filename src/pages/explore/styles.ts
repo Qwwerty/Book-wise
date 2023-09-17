@@ -12,3 +12,16 @@ export const Container = styled('main', {
     backgroundColor: 'transparent',
   },
 })
+
+export const Header = styled('section', {
+  marginBottom: '2.75rem',
+
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+})
+
+export const ContainerInputSearch = styled('div', {
+  width: '100%',
+  maxWidth: '27.0625rem',
+})
