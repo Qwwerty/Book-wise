@@ -54,7 +54,6 @@ interface IModalBookReviewDetail {
 }
 
 export function ModalBookReviewDetail({ book }: IModalBookReviewDetail) {
-  console.log(book)
   const amountOfComments = book.ratings.length
 
   const categories =
