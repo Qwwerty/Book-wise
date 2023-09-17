@@ -25,6 +25,9 @@ export default async function handler(
         include: {
           user: true,
         },
+        orderBy: {
+          created_at: 'desc',
+        },
       },
     },
   })
