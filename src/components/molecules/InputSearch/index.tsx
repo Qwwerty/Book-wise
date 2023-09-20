@@ -3,15 +3,19 @@ import { Container, SearchContent } from './styles'
 
 interface IInputSearch {
   setSearch: (value: string) => void
+  placeholder?: string
 }
 
-export function InputSearch({ setSearch }: IInputSearch) {
+export function InputSearch({
+  setSearch,
+  placeholder = 'Buscar livro ou autor',
+}: IInputSearch) {
   return (
     <Container>
       <SearchContent>
         <input
           onChange={(event) => setSearch(event.target.value)}
-          placeholder="Buscar livro ou autor"
+          placeholder={placeholder}
         />
         <MagnifyingGlass size={20} />
       </SearchContent>
