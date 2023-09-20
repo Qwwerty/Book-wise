@@ -1,5 +1,6 @@
 import { AppProps } from 'next/app'
 import { SessionProvider } from 'next-auth/react'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 import { globalStyles } from '../../styles/global'
 import { NextPage } from 'next'
@@ -27,6 +28,8 @@ export default function App({
 
   return (
     <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
+
       <SessionProvider session={session}>
         {getLayout(<Component {...pageProps} />)}
       </SessionProvider>

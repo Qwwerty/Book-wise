@@ -8,7 +8,7 @@ import { SidebarAuthentication } from '@components/organims/SidebarAuthenticatio
 
 interface Link {
   name: string
-  hfref: string
+  href: string
   icon: JSX.Element
   auth?: boolean
 }
@@ -16,19 +16,19 @@ interface Link {
 const NAV_ITEMS = [
   {
     name: 'Início',
-    hfref: '/home',
+    href: '/home',
     icon: <ChartLineUp size={24} />,
     order: 1,
   },
   {
     name: 'Explorar',
-    hfref: '/explore',
+    href: '/explore',
     icon: <Binoculars size={24} />,
     order: 2,
   },
   {
     name: 'Perfil',
-    hfref: '/profile',
+    href: '/profile',
     icon: <User size={24} />,
     auth: true,
     order: 3,
@@ -58,6 +58,16 @@ export function Sidebar() {
     )
 
     if (isSignedIn) {
+      items.linksWithAuthentication = items.linksWithAuthentication.map(
+        (item) => {
+          if (item.href === '/profile') {
+            item.href = `/profile/${session.data.user.id}`
+          }
+
+          return item
+        },
+      )
+
       return [
         ...items.linksWithoutAuthentications,
         ...items.linksWithAuthentication,
@@ -65,6 +75,7 @@ export function Sidebar() {
     }
 
     return [...items.linksWithoutAuthentications]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSignedIn])
 
   return (

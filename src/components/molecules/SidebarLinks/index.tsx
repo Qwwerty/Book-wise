@@ -3,7 +3,7 @@ import { Link } from '@components/atoms/Link'
 
 interface Link {
   name: string
-  hfref: string
+  href: string
   icon: JSX.Element
   auth?: boolean
 }
@@ -18,7 +18,7 @@ export function SidebarLinks({ links }: props) {
       {links.map((item, index) => (
         <Link
           name={item.name}
-          href={item.hfref}
+          href={item.href}
           icon={item.icon}
           activeClassName="active"
           key={index}
