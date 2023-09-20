@@ -10,13 +10,7 @@ export const Container = styled('div', {
   paddingRight: '$2',
 
   '&::-webkit-scrollbar': {
-    width: 0,
-    background: 'transparent',
-  },
-
-  '&::-webkit-scrollbar-thumb': {
-    height: '20rem',
-    borderRadius: '$full',
-    background: 'transparent',
+    width: '0.2rem',
+    backgroundColor: 'transparent',
   },
 })
