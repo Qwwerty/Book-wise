@@ -12,10 +12,30 @@ export const Container = styled('div', {
 
   background: 'linear-gradient(180deg, #7FD1CC 0%, #9694F5 100%)',
 
-  img: {
-    width: 28,
-    height: 28,
-    objectFit: 'cover',
-    borderRadius: '$full',
+  variants: {
+    size: {
+      md: {
+        width: '2rem',
+        height: '2rem',
+
+        img: {
+          width: '1.75rem',
+          height: '1.75rem',
+          objectFit: 'cover',
+          borderRadius: '$full',
+        },
+      },
+      lg: {
+        width: '4.5rem',
+        height: '4.5rem',
+
+        img: {
+          width: '4.25rem',
+          height: '4.25rem',
+          objectFit: 'cover',
+          borderRadius: '$full',
+        },
+      },
+    },
   },
 })
