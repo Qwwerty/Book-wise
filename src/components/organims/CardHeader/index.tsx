@@ -1,10 +1,13 @@
 import { Image } from '@components/atoms/Image'
 import { Container, HeaderInfo } from './styles'
 import { Ratings } from '@components/Ratings'
+import { useRouter } from 'next/router'
+import { Avatar } from '@components/atoms/Avatar'
 
 interface IRating {
   rate: number
   user: {
+    id: string
     name: string
     avatar_url: string
   }
@@ -16,17 +19,20 @@ interface ICardHeader {
 }
 
 export function CardHeader({ rating, distance }: ICardHeader) {
+  const router = useRouter()
+
+  async function handleToProfile(userId: string) {
+    await router.push(`/profile/${userId}`)
+  }
+
   return (
     <Container>
       <HeaderInfo>
-        <div>
-          <Image
-            src={rating.user.avatar_url}
-            width={40}
-            height={40}
-            alt={rating.user.name}
-          />
-        </div>
+        <Avatar
+          src={rating.user.avatar_url}
+          alt={rating.user.name}
+          onClick={() => handleToProfile(rating.user.id)}
+        />
 
         <div>
           <p>{rating.user.name}</p>

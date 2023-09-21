@@ -8,6 +8,7 @@ import {
 } from './styles'
 import { Ratings } from '@components/Ratings'
 import { getRelativeTimeString } from '@utils/getRelativeTimeString'
+import { useRouter } from 'next/router'
 
 interface IRating {
   id: string
@@ -30,11 +31,21 @@ interface IComment {
 }
 
 export function Comment({ rating }: IComment) {
+  const router = useRouter()
+
+  async function handleToProfile(userId: string) {
+    await router.push(`/profile/${userId}`)
+  }
+
   return (
     <Container>
       <HeaderComment>
         <UserInfo>
-          <Avatar src={rating.user.avatar_url} alt={rating.user.name} />
+          <Avatar
+            src={rating.user.avatar_url}
+            alt={rating.user.name}
+            onClick={() => handleToProfile(rating.user_id)}
+          />
 
           <UserInfoDescription>
             <p>{rating.user.name}</p>

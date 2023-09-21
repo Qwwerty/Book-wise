@@ -24,6 +24,10 @@ export const UserInfo = styled('div', {
   display: 'flex',
   alignItems: 'center',
   gap: '1rem',
+
+  img: {
+    cursor: 'pointer',
+  },
 })
 
 export const UserInfoDescription = styled('div', {

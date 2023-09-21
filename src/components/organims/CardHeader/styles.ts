@@ -11,6 +11,10 @@ export const HeaderInfo = styled('div', {
   display: 'flex',
   gap: '$4',
 
+  img: {
+    cursor: 'pointer',
+  },
+
   'div:first-child': {
     display: 'flex',
     justifyContent: 'center',
