@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useQuery } from '@tanstack/react-query'
 import { api } from '@lib/axios'
@@ -25,10 +25,19 @@ interface ListBooksProps {
 }
 
 export function ListBooks({ category, search }: ListBooksProps) {
-  const [modalOpen, setModalOpen] = useState(false)
-  const [bookId, setBookId] = useState('')
-
   const router = useRouter()
+
+  const [modalOpen, setModalOpen] = useState(false)
+  const [bookId, setBookId] = useState(() => {
+    const { params } = router.query
+
+    if (params) {
+      setModalOpen(true)
+      return params[0]
+    }
+
+    return ''
+  })
 
   const { data: books } = useQuery<Book[]>([`book-${category}`], async () => {
     const { data } = await api.get('/books', {
@@ -47,26 +56,22 @@ export function ListBooks({ category, search }: ListBooksProps) {
     )
   })
 
-  function handleSelectBook(bookId: string) {
+  async function handleSelectBook(bookId: string) {
+    await router.push(`/explore/${bookId}`)
+
     setBookId(bookId)
     setModalOpen(true)
   }
 
-  useEffect(() => {
-    if (!router.query?.bookId) return
+  async function handleToggleModal(value: boolean) {
+    const isModalClose = value === false
 
-    const { pathname, query } = router
+    if (isModalClose) {
+      await router.push('/explore')
+    }
 
-    setBookId(String(router.query?.bookId))
-    setModalOpen(true)
-
-    delete router.query.bookId
-
-    router.push({
-      pathname,
-      query,
-    })
-  }, [router, router.query.bookId])
+    setModalOpen(value)
+  }
 
   return (
     <Fragment>
@@ -83,7 +88,7 @@ export function ListBooks({ category, search }: ListBooksProps) {
       {modalOpen && bookId && (
         <ModalBookReview
           open={modalOpen}
-          onOpenChange={setModalOpen}
+          onOpenChange={handleToggleModal}
           bookId={bookId}
         />
       )}
