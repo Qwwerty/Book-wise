@@ -8,7 +8,15 @@ export const Container = styled('div', {
 
   backgroundColor: '$gray700',
   padding: '1.125rem $5',
+  border: '2px solid transparent',
   borderRadius: 8,
+
+  cursor: 'pointer',
+  transition: 'border-color 200ms ease-in-out',
+
+  '&:hover': {
+    border: '2px solid $gray600',
+  },
 })
 
 export const Description = styled('div', {

@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { BookAuthor, BookName, Container, Description } from './styles'
 import { Ratings } from '@components/Ratings'
+import { useRouter } from 'next/router'
 
 interface IBooks {
   id: string
@@ -15,8 +16,14 @@ interface PopularBookProps {
 }
 
 export function PopularBook({ book }: PopularBookProps) {
+  const router = useRouter()
+
+  async function handleMoveToReview(bookId: string) {
+    await router.push(`/explore/${bookId}`)
+  }
+
   return (
-    <Container>
+    <Container onClick={() => handleMoveToReview(book.id)}>
       <Image src={book.cover_url} width={64} height={94} alt={book.name} />
 
       <Description>
