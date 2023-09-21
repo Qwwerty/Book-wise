@@ -22,6 +22,8 @@ export function Analytics({
   ratedBooks,
   mostReadCategory,
 }: IAnalytics) {
+  const memberSinceYear = new Date(user.member_since).getFullYear()
+
   return (
     <Container>
       <Header>
@@ -29,7 +31,7 @@ export function Analytics({
 
         <Title>
           <p>{user.name}</p>
-          <span>membro desde 2019</span>
+          <span>membro desde {memberSinceYear}</span>
         </Title>
       </Header>
 
