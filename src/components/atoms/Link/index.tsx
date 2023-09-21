@@ -10,7 +10,10 @@ type props = {
 export function Link({ name, icon, activeClassName, ...rest }: props) {
   const { asPath } = useRouter()
 
-  const className = asPath === rest.href ? activeClassName : ''
+  const className =
+    asPath === rest.href || asPath.includes(String(rest.href))
+      ? activeClassName
+      : ''
 
   return (
     <NextLink {...rest} className={className}>
