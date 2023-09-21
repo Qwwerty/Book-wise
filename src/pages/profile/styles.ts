@@ -6,6 +6,7 @@ export const Container = styled('div', {
 
   display: 'grid',
   gridTemplateColumns: '1fr 308px',
+  alignItems: 'flex-start',
   gap: '4rem',
   overflow: 'hidden',
 })
