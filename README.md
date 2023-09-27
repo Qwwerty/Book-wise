@@ -1,34 +1,91 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h1 align="center">
 
-## Getting Started
+<img src=".github/images/logo.png" alt="book-wise" width="120px"/>
 
-First, run the development server:
+</h1>
+
+<p align="center">
+  BookWise - Evaluation of books
+  <br>
+  <br>
+
+  <a href="www.linkedin.com/in/rhalfoliveira">
+    <img alt="Made by Rhalf Oliveira" src="https://img.shields.io/badge/made%20by-Rhalf%20Oliveira-%237519C1">
+  </a>
+
+  <a href="https://github.com/qwwerty/Book-wise/commits/master">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/qwwerty/letmeask">
+  </a>
+
+</p>
+
+<p align="center">
+  <a href="#dart-sobre">About</a> &#xa0; | &#xa0; 
+  <a href="#rocket-tecnologias">Technologies</a> &#xa0; | &#xa0;
+  <a href="#white_check_mark-requerimentos">Requirements</a> &#xa0; | &#xa0;
+  <a href="#checkered_flag-começando">Starting</a> &#xa0; &#xa0; | &#xa0;
+  <a href="#framed_picture-imagens">Images</a> &#xa0; &#xa0;
+</p>
+
+<br>
+
+## :dart: About
+
+Shopping cart system with Stripe Js integration. The user will be able to choose several products that make up his cart, after all the choices, the payment will be made with Stripe.
+
+## :rocket: Technologies
+
+The following technologies were used in the project:
+
+- [Vite](https://vitejs.dev/)
+- [NextJs](https://nextjs.org/)
+- [Typescript](https://www.typescriptlang.org/)
+- [Keen Slider](https://keen-slider.io/)
+- [use-shopping-cart](https://useshoppingcart.com/)
+- [Stripe](https://stripe.com/en-br)
+- [NProgress](https://ricostacruz.com/nprogress/)
+- [Axios](https://axios-http.com/)
+
+## :white_check_mark: Requirements
+
+- [Node](https://nodejs.org/en/)
+- [Npm](https://www.npmjs.com/)
+- [Yarn](https://yarnpkg.com/lang/en/)
+
+## :checkered_flag: Starting
 
 ```bash
-npm run dev
-# or
-yarn dev
+# Clone this project
+$ git clone https://github.com/qwwerty/Ig.shop
+
+# Access
+$ cd Ig.shop
+
+# Install dependencies
+$ yarn install
+
+# Run the project
+$ yarn dev
+
+# The server will initialize in the <http://localhost:3000>
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## :point_right: Figma
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+- [Figma](<https://www.figma.com/file/Kc8HVxwGUB0BrApZrPY6jk/Ignite-Shop-2.0-(Copy)?node-id=0%3A1&t=scE5guMtOlnqQvnf-1>)
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## :framed_picture: Images
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+<h1 align="center">
+    <img alt="Cover" src = "./.github/images/cover.png" />
+</h1>
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<h1 align="center">
+    <img alt="Cover" src = "./.github/images/image-1.png" />
+    <img alt="Cover" src = "./.github/images/image-2.png" />
+    <img alt="Cover" src = "./.github/images/image-3.png" />
+    <img alt="Cover" src = "./.github/images/image-4.png" />
+    <img alt="Cover" src = "./.github/images/image-5.png" />
+    <img alt="Cover" src = "./.github/images/image-6.png" />
+    <img alt="Cover" src = "./.github/images/image-7.png" />
+</h1>
