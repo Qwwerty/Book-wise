@@ -102,4 +102,8 @@ $ npm run dev
     <img alt="Cover" src = "./.github/images/image-5.png" />
     <img alt="Cover" src = "./.github/images/image-6.png" />
     <img alt="Cover" src = "./.github/images/image-7.png" />
+    <img alt="Cover" src = "./.github/images/image-8.png" />
+    <img alt="Cover" src = "./.github/images/image-9.png" />
+    <img alt="Cover" src = "./.github/images/image-10.png" />
+    <img alt="Cover" src = "./.github/images/image-11.png" />
 </h1>
