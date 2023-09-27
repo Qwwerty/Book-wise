@@ -1,6 +1,6 @@
 <h1 align="center">
 
-<img src=".github/images/logo.png" alt="book-wise" width="120px"/>
+Book-wise :rocket:
 
 </h1>
 
@@ -31,7 +31,7 @@
 
 ## :dart: About
 
-Shopping cart system with Stripe Js integration. The user will be able to choose several products that make up his cart, after all the choices, the payment will be made with Stripe.
+Book-wise is a platform for book reviews on different topics. The aim is to group the opinions of all readers so that someone else can choose a book to read based on existing comments or by star rating.
 
 ## :rocket: Technologies
 
@@ -40,11 +40,17 @@ The following technologies were used in the project:
 - [Vite](https://vitejs.dev/)
 - [NextJs](https://nextjs.org/)
 - [Typescript](https://www.typescriptlang.org/)
-- [Keen Slider](https://keen-slider.io/)
-- [use-shopping-cart](https://useshoppingcart.com/)
-- [Stripe](https://stripe.com/en-br)
-- [NProgress](https://ricostacruz.com/nprogress/)
 - [Axios](https://axios-http.com/)
+- [Stitches](https://stitches.dev/)
+- [Prisma](https://www.prisma.io/)
+- [Radix-ui](https://www.radix-ui.com/)
+- [Tanstack](https://tanstack.com/)
+- [Moment](https://momentjs.com/)
+- [Next-auth](https://next-auth.js.org/)
+- [Phosphor-react](https://phosphoricons.com/)
+- [React-hook-form](https://react-hook-form.com/)
+- [React-toastify](https://fkhadra.github.io/react-toastify/introduction)
+- [Zod](https://zod.dev/)
 
 ## :white_check_mark: Requirements
 
@@ -56,23 +62,31 @@ The following technologies were used in the project:
 
 ```bash
 # Clone this project
-$ git clone https://github.com/qwwerty/Ig.shop
+$ git clone https://github.com/qwwerty/Book-wise
 
 # Access
-$ cd Ig.shop
+$ cd Book-wise
 
 # Install dependencies
-$ yarn install
+$ npm install
+
+# Create database
+$ npx prisma migrate dev
+
+# Inicialize the seed
+$ npx prisma db seed
+
+# Rename the .env.example file to .env and configure environment variables 
 
 # Run the project
-$ yarn dev
+$ npm run dev
 
 # The server will initialize in the <http://localhost:3000>
 ```
 
 ## :point_right: Figma
 
-- [Figma](<https://www.figma.com/file/Kc8HVxwGUB0BrApZrPY6jk/Ignite-Shop-2.0-(Copy)?node-id=0%3A1&t=scE5guMtOlnqQvnf-1>)
+- [Figma](<https://www.figma.com/file/Kc8HVxwGUB0BrApZrPY6jk/Ignite-Shop-2.0-(Copy)?node-id=0%3A1&t=scE5guMtOlnqQvnf-1](https://www.figma.com/file/fdbvdiEk8XKiKIZ3EJTyJ3/BookWise-(Copy)?type=design&node-id=1%3A17&mode=design&t=z9rNSJP2AEZ4V7Wg-1>)
 
 ## :framed_picture: Images
 
