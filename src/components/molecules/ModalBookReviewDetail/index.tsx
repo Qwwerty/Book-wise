@@ -81,7 +81,7 @@ export function ModalBookReviewDetail({ book }: IModalBookReviewDetail) {
             <Ratings quantity={book.avgRating} />
             <BookQuantityRate>
               {amountOfComments}
-              {amountOfComments === 1 ? 'avaliação' : 'avaliações'}
+              {amountOfComments === 1 ? ' avaliação' : ' avaliações'}
             </BookQuantityRate>
           </div>
         </BookInfo>
