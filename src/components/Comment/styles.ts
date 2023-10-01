@@ -111,6 +111,8 @@ export const CommentActions = styled('div', {
     justifyContent: 'center',
     alignItems: 'center',
 
+    cursor: 'pointer',
+
     borderRadius: '0.25rem',
     backgroundColor: '$gray600',
 
