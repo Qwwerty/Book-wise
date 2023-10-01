@@ -91,10 +91,6 @@ $ npm run dev
 ## :framed_picture: Images
 
 <h1 align="center">
-    <img alt="Cover" src = "./.github/images/cover.png" />
-</h1>
-
-<h1 align="center">
     <img alt="Cover" src = "./.github/images/image-1.png" />
     <img alt="Cover" src = "./.github/images/image-2.png" />
     <img alt="Cover" src = "./.github/images/image-3.png" />
