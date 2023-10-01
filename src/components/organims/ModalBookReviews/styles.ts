@@ -26,6 +26,8 @@ export const CommentsTitle = styled('div', {
     alignItems: 'center',
     padding: '0.25rem 0.5rem',
 
+    cursor: 'pointer',
+
     color: '$purple100',
 
     transitionDuration: '300ms',
