@@ -12,7 +12,6 @@ Book-wise :rocket:
   <a href="www.linkedin.com/in/rhalfoliveira">
     <img alt="Made by Rhalf Oliveira" src="https://img.shields.io/badge/made%20by-Rhalf%20Oliveira-%237519C1">
   </a>
-
   <a href="https://github.com/qwwerty/Book-wise/commits/master">
     <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/qwwerty/letmeask">
   </a>
