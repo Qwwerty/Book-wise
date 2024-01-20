@@ -1,4 +1,4 @@
-já<h1 align="center">
+<h1 align="center">
 
 Book-wise :rocket:
 
