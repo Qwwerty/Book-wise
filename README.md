@@ -1,6 +1,5 @@
 <h1 align="center">
 
-
 Book-wise :rocket:
 
 </h1>
